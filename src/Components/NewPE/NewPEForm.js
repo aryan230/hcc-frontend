@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "@quillforms/renderer-core";
 import "@quillforms/renderer-core/build-style/style.css";
 import { registerCoreBlocks } from "@quillforms/react-renderer-utils";
 import Header from "../Header";
+import { useNavigate } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
+import Loader from "../Loader";
+import PEModal from "../PE/PEModal";
 registerCoreBlocks();
 function NewPEForm() {
   const Boards = [
@@ -92,8 +97,47 @@ function NewPEForm() {
     },
   ];
 
+  const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
+  const collRef = collection(db, "pe-forms");
+  const [peModal, setPeModal] = useState(false);
+  const [peData, setPeData] = useState({});
+  const [peID, setPEID] = useState("");
+  const formSubmitHandler = async (data) => {
+    setLoader(true);
+
+    const ansObj = {
+      board: data.answers.board.value,
+      email: data.answers.email.value,
+      ftWEXP: data.answers.ftWEXP.value,
+      gender: data.answers.gender.value,
+      gmat: data.answers.gmat.value,
+      gqr1294c: data.answers.gqr1294c.value,
+      kd12edg: data.answers.kd12edg.value,
+      nb913rqw: data.answers.nb913rqw.value,
+      ptWEXP: data.answers.ptWEXP.value,
+      something: data.answers.something.value,
+      something2: data.answers.something2.value,
+      something3: data.answers.something3.value,
+      isPaid: false,
+    };
+    console.log(ansObj);
+    const docRef = await addDoc(collRef, ansObj);
+    setPeData(ansObj);
+    setPEID(docRef.id);
+    setLoader(false);
+    setPeModal(true);
+  };
+
   return (
     <div style={{ width: "100%", height: "90vh" }}>
+      <PEModal
+        value={peModal}
+        closePEModal={setPeModal}
+        data={peData}
+        id={peID}
+      />
+      {loader && <Loader />}
       <Form
         formId="1"
         formObj={{
@@ -305,7 +349,7 @@ function NewPEForm() {
           console.log(data);
           setTimeout(() => {
             setIsSubmitting(false);
-            completeForm();
+            formSubmitHandler(data);
           }, 500);
         }}
       />

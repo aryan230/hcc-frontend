@@ -27,7 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "./Loader";
 import Notification from "./Notification";
 import { register } from "../redux/actions/userAction";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const navigation = [
   { name: "Product", href: "#" },
   { name: "Features", href: "#" },
@@ -310,12 +310,12 @@ const Hero = () => {
                 {userData ? (
                   <div className="mt-10 sm:flex sm:justify-evenly lg:justify-evenly items-center">
                     <div className="rounded-md shadow">
-                      <a
-                        href="#"
+                      <Link
+                        to="/pe"
                         className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-base md:px-10"
                       >
                         Get Your PE
-                      </a>
+                      </Link>
                     </div>
                     <div className="mt-3 rounded-md shadow sm:mt-0">
                       <a
@@ -338,12 +338,12 @@ const Hero = () => {
                 ) : (
                   <div className="mt-10 sm:flex sm:justify-center lg:justify-start">
                     <div className="rounded-md shadow">
-                      <a
-                        href="#"
+                      <Link
+                        to="/pe"
                         className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                       >
                         Get Your PE
-                      </a>
+                      </Link>
                     </div>
                     <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
                       <a

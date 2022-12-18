@@ -43,7 +43,7 @@ function App() {
           <Route element={<NewPEForm />} path="/pe/form"></Route>
           <Route element={<PEN />} path="/pe"></Route>
           <Route element={<Checkout />} path="/checkout/:orderId"></Route>
-          <Route element={<PECheckout />} path="/pecheckout/:formId"></Route>
+          <Route element={<PECheckout />} path="/pe/checkout/:formId"></Route>
           {/* <Route element={<NewPEForm />} path="/newpe"></Route> */}
           <Route element={<ThanksPage />} path="/thanks/:formId"></Route>
           <Route element={<NotFound />} path="*"></Route>

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Form } from "@quillforms/renderer-core";
-import "@quillforms/renderer-core/build-style/style.css";
-import { registerCoreBlocks } from "@quillforms/react-renderer-utils";
 import Header from "../Header";
 import { useNavigate } from "react-router-dom";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import Loader from "../Loader";
 import PEModal from "../PE/PEModal";
+import PELoader from "../../Utils/PELoader";
+import { Form } from "@quillforms/renderer-core";
+import "@quillforms/renderer-core/build-style/style.css";
+import { registerCoreBlocks } from "@quillforms/react-renderer-utils";
+
 registerCoreBlocks();
 function NewPEForm() {
   const Boards = [
@@ -130,16 +132,17 @@ function NewPEForm() {
   };
 
   return (
-    <div style={{ width: "100%", height: "90vh" }}>
+    <div className="pe-form-new">
       <PEModal
         value={peModal}
         closePEModal={setPeModal}
         data={peData}
         id={peID}
       />
-      {loader && <Loader />}
+      {loader && <PELoader />}
       <Form
         formId="1"
+        style={{ fontSize: "34px" }}
         formObj={{
           blocks: [
             {
@@ -147,12 +150,14 @@ function NewPEForm() {
               id: "jg1401r",
               layout: "split-right",
               attributes: {
-                label: "Welcome to your profile evaluation",
-
                 attachment: {
                   type: "image",
-                  url: "https://quillforms.com/wp-content/uploads/2022/01/4207-ai-1.jpeg",
+                  url: "https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80",
                 },
+                layout: "split-right",
+                required: true,
+                label: "Welcome to Profile Evaluation 2022",
+                description: "For best experience use a Laptop/PC",
               },
             },
             {
@@ -199,8 +204,6 @@ function NewPEForm() {
               attributes: {
                 required: true,
                 label: "Gender?",
-                description:
-                  "Some business schools give preference to women candidates owing to gender imbalance.",
                 choices: [
                   {
                     label: "Male",
@@ -327,7 +330,8 @@ function NewPEForm() {
             },
           ],
           theme: {
-            font: "Roboto",
+            font: "Karla",
+
             buttonsBgColor: "#9b51e0",
             logo: {
               src: "",

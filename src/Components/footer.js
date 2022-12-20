@@ -9,10 +9,10 @@ const navigation = {
     { name: "IELTS Preparation", href: "#" },
   ],
   support: [
-    { name: "Pricing", href: "#" },
-    { name: "Documentation", href: "#" },
+    { name: "Help & Support", href: "#" },
+    { name: "Partner With Us", href: "#" },
     { name: "Guides", href: "#" },
-    { name: "API Status", href: "#" },
+    { name: "Scholarships", href: "#" },
   ],
   company: [
     { name: "About", href: "#" },
@@ -22,9 +22,22 @@ const navigation = {
     { name: "Partners", href: "#" },
   ],
   legal: [
-    { name: "Claim", href: "#" },
-    { name: "Privacy", href: "#" },
-    { name: "Terms", href: "#" },
+    {
+      name: "Terms & Condition",
+      href: "https://drive.google.com/file/d/137ETixkMCPdN3bsy8GGB5CvDXGLe3VVE/view?usp=sharing",
+    },
+    {
+      name: "Refund & Cancellation",
+      href: "https://drive.google.com/file/d/18ppsgvL2RgcWFNyJU1ZzU3L70OTXOIn6/view?usp=sharing",
+    },
+    {
+      name: "Privacy Policy",
+      href: "https://drive.google.com/file/d/1l4L-CXr_NANkOplH4XzY8s6thNfR9m1L/view?usp=sharing",
+    },
+    {
+      name: "Use of Site",
+      href: "https://drive.google.com/file/d/1B53_Ijb4zregZiHrS8JXSvKPefSCXS2y/view?usp=sharing",
+    },
   ],
   social: [
     {
@@ -181,6 +194,7 @@ const Footer = () => {
                     <li key={item.name}>
                       <a
                         href={item.href}
+                        target="_blank"
                         className="text-base text-gray-500 hover:text-gray-900"
                       >
                         {item.name}

@@ -20,6 +20,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PECheckout from "./Components/PE/PECheckout";
 import Whatsapp from "./Utils/whatsapp";
 import NewPEForm from "./Components/NewPE/NewPEForm";
+import TyepForm from "./Components/NewPE/TyepForm";
+import UseOfSite from "./Screens/Policy/UseOfSite";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -47,8 +49,12 @@ function App() {
           {/* <Route element={<NewPEForm />} path="/newpe"></Route> */}
           <Route element={<ThanksPage />} path="/thanks/:formId"></Route>
           <Route element={<NotFound />} path="*"></Route>
+          {/* Policy */}
+          <Route element={<UseOfSite />} path="/useOfSite"></Route>
         </Routes>
+
         {/* <Whatsapp /> */}
+
         <Footer />
       </Router>
     </div>

@@ -32,6 +32,7 @@ import axios from "axios";
 import { payOrder } from "../../redux/actions/orderAction";
 import { useDispatch } from "react-redux";
 import { db } from "../../firebase";
+import PEThanks from "../../assets/pethanks.png";
 import {
   collection,
   doc,
@@ -40,6 +41,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import Check from "../../assets/check.gif";
+import Loader from "../Loader";
 
 function PEModal({ value, closePEModal, id, data }) {
   const formId = id;
@@ -106,16 +108,6 @@ function PEModal({ value, closePEModal, id, data }) {
       description: "Transaction For The Honest Career Company",
       image: "https://i.ibb.co/cTjDFcB/Chetan-s.png",
       order_id: id,
-      prefill: {
-        name: "The Honest Career Company",
-        email: "support@thehonestcareerco.in",
-        contact: "7045013337",
-      },
-      readonly: {
-        email: true,
-        contact: true,
-        name: true,
-      },
       theme: {
         color: "#2F2E41",
       },
@@ -172,7 +164,7 @@ function PEModal({ value, closePEModal, id, data }) {
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto zIndexIncrement"
-        onClose={closePEModal}
+        onClose={setOpen}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -204,11 +196,38 @@ function PEModal({ value, closePEModal, id, data }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-max sm:w-full sm:p-6">
-              <div className="relative bg-white">
-                <div className="absolute inset-0" aria-hidden="true">
-                  <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-b from-sky-600 to-indigo-800" />
+              <div className="relative bg-white p-10">
+                {paymentLoading && <Loader />}
+
+                <div className="w-full flex items-center justify-center my-5">
+                  <div className="flex justify-center items-center rounded-full">
+                    <img src={PEThanks} alt="" className="w-36 h-36" />
+                  </div>
                 </div>
-                <div className="relative max-w-7xl mx-auto lg:grid lg:grid-cols-2 lg:px-8">
+                <h2 className="text-base font-semibold tracking-wide text-cyan-600 uppercase  my-2  font-body">
+                  Ref ID: {id}
+                </h2>
+                <h1 className="mt-2 text-3xl font-medium font-body text-sky-900 sm:text-4xl">
+                  Hey {data.kd12edg},
+                </h1>
+
+                <p className="text-lg text-gray-700 max-w-lg my-5 font-body">
+                  Thanks for submitting your profile evaluation form. Now just
+                  sit back and relax our counsellor will get back to you within
+                  24 hours.
+                </p>
+                <button
+                  onClick={(e) => {
+                    navigate("/pe/results");
+                  }}
+                  className="w-full bg-sky-700 my-5 font-body border border-transparent rounded-md py-4 px-8 flex items-center justify-center text-lg leading-6 font-medium text-white hover:bg-sky-800 md:px-10"
+                >
+                  Track your PE
+                </button>
+                {/* <div className="absolute inset-0" aria-hidden="true">
+                  <div className="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-b from-sky-600 to-indigo-800" />
+                </div> */}
+                {/* <div className="relative max-w-7xl mx-auto lg:grid lg:grid-cols-2 lg:px-8">
                   <div className="bg-white py-16 px-4 sm:py-24 sm:px-6 lg:px-0 lg:pr-8">
                     <div className="max-w-lg mx-auto lg:mx-0">
                       <h2 className="text-base font-semibold tracking-wide text-cyan-600 uppercase">
@@ -336,16 +355,20 @@ function PEModal({ value, closePEModal, id, data }) {
                             </span>
                           </li>
                         </ul>
+                        {!sdkready ? (
+                          <h1>Loading</h1>
+                        ) : (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              startRazorPay();
+                            }}
+                            className="w-full bg-white border border-transparent rounded-md py-4 px-8 flex items-center justify-center text-lg leading-6 font-medium text-cyan-700 hover:bg-cyan-50 md:px-10"
+                          >
+                            Pay Now
+                          </button>
+                        )}
 
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            startRazorPay();
-                          }}
-                          className="w-full bg-white border border-transparent rounded-md py-4 px-8 flex items-center justify-center text-lg leading-6 font-medium text-cyan-700 hover:bg-cyan-50 md:px-10"
-                        >
-                          {!sdkready ? "Loading" : "Pay Now"}
-                        </button>
                         <a
                           href="#"
                           className="block text-center text-base font-medium text-cyan-100 hover:text-white"
@@ -355,7 +378,7 @@ function PEModal({ value, closePEModal, id, data }) {
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </Transition.Child>

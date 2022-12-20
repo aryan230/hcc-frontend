@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../Components/Header";
+import { BriefcaseIcon } from "@heroicons/react/outline";
 
 function PEN() {
   return (
@@ -16,7 +17,7 @@ function PEN() {
               Get your profile evaluated by our best counsellor’s. And match
               which colleges accept your profile.
             </p>
-            <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
+            <div class="mt-5 max-w-md mx-auto sm:flex sm:justify-center sm:items-center md:mt-8">
               <div class="rounded-md shadow">
                 <a
                   href="/pe/form"
@@ -24,6 +25,14 @@ function PEN() {
                 >
                   {" "}
                   Let's Start{" "}
+                </a>
+              </div>
+              <div class="rounded-md shadow mt-2 sm:ml-5">
+                <a
+                  href="/pe/form"
+                  class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-sky-700 md:py-4 md:text-lg md:px-10"
+                >
+                  PE Results <BriefcaseIcon className="h-5 w-5 ml-2" />
                 </a>
               </div>
             </div>

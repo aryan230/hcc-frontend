@@ -1,4 +1,4 @@
-import { SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
+import { FireIcon, SpeakerphoneIcon, XIcon } from "@heroicons/react/outline";
 
 const Banner = ({ closeBanner }) => {
   return (
@@ -6,9 +6,10 @@ const Banner = ({ closeBanner }) => {
       <div className="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
         <div className="pr-16 sm:text-center sm:px-16">
           <p className="font-medium text-white">
-            <span className="md:hidden">We announced a new product!</span>
+            <span className="md:hidden">50% OFF on all programs!</span>
             <span className="hidden md:inline">
-              Big news! We're excited to announce a brand new product.
+              We are exicited to announce 20% OFF on all programs! Check your
+              eligility
             </span>
             <span className="block sm:ml-2 sm:inline-block">
               <a href="#" className="text-white font-bold underline">

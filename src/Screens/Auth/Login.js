@@ -7,7 +7,6 @@ import { USER_LOGOUT } from "../../redux/constants/userConstants";
 import { login } from "../../redux/actions/userAction";
 import { ToastContainer, toast } from "react-toastify";
 import { useGoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const Login = () => {
@@ -161,35 +160,28 @@ const Login = () => {
                         </svg>
                       </a>
                     </div>
-                    <FacebookLogin
-                      appId="1197601127521864"
-                      callback={responseFacebook}
-                      render={(renderProps) => (
-                        <button onClick={renderProps.onClick}>
-                          <a className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                            <span className="sr-only">
-                              Sign in with Facebook
-                            </span>
-                            <svg
-                              className="w-5 h-5"
-                              viewBox="126.445 2.281 589 589"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <circle
-                                cx="420.945"
-                                cy="296.781"
-                                r="294.5"
-                                fill="#3c5a9a"
-                              />
-                              <path
-                                d="M516.704 92.677h-65.239c-38.715 0-81.777 16.283-81.777 72.402.189 19.554 0 38.281 0 59.357H324.9v71.271h46.174v205.177h84.847V294.353h56.002l5.067-70.117h-62.531s.14-31.191 0-40.249c0-22.177 23.076-20.907 24.464-20.907 10.981 0 32.332.032 37.813 0V92.677h-.032z"
-                                fill="#fff"
-                              />
-                            </svg>
-                          </a>
-                        </button>
-                      )}
-                    />
+
+                    <div>
+                      <a className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <span className="sr-only">Sign in with Facebook</span>
+                        <svg
+                          className="w-5 h-5"
+                          viewBox="126.445 2.281 589 589"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle
+                            cx="420.945"
+                            cy="296.781"
+                            r="294.5"
+                            fill="#3c5a9a"
+                          />
+                          <path
+                            d="M516.704 92.677h-65.239c-38.715 0-81.777 16.283-81.777 72.402.189 19.554 0 38.281 0 59.357H324.9v71.271h46.174v205.177h84.847V294.353h56.002l5.067-70.117h-62.531s.14-31.191 0-40.249c0-22.177 23.076-20.907 24.464-20.907 10.981 0 32.332.032 37.813 0V92.677h-.032z"
+                            fill="#fff"
+                          />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 </div>
 

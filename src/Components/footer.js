@@ -9,7 +9,7 @@ const navigation = {
     { name: "IELTS Preparation", href: "#" },
   ],
   support: [
-    { name: "Help & Support", href: "#" },
+    { name: "Help & Support", href: "/help" },
     { name: "Partner With Us", href: "#" },
     { name: "Guides", href: "#" },
     { name: "Scholarships", href: "#" },
@@ -24,19 +24,19 @@ const navigation = {
   legal: [
     {
       name: "Terms & Condition",
-      href: "https://drive.google.com/file/d/137ETixkMCPdN3bsy8GGB5CvDXGLe3VVE/view?usp=sharing",
+      href: "/tos",
     },
     {
       name: "Refund & Cancellation",
-      href: "https://drive.google.com/file/d/18ppsgvL2RgcWFNyJU1ZzU3L70OTXOIn6/view?usp=sharing",
+      href: "/refund",
     },
     {
       name: "Privacy Policy",
-      href: "https://drive.google.com/file/d/1l4L-CXr_NANkOplH4XzY8s6thNfR9m1L/view?usp=sharing",
+      href: "/privacy",
     },
     {
       name: "Use of Site",
-      href: "https://drive.google.com/file/d/1B53_Ijb4zregZiHrS8JXSvKPefSCXS2y/view?usp=sharing",
+      href: "/UseOfSite",
     },
   ],
   social: [
@@ -208,7 +208,7 @@ const Footer = () => {
         </div>
         <div className="mt-12 border-t border-gray-200 pt-8">
           <p className="text-base text-gray-400 xl:text-center">
-            &copy; 2022 The Honest Career Company, Inc. All rights reserved.
+            &copy; 2022 The Honest Career Company. All rights reserved.
           </p>
         </div>
       </div>

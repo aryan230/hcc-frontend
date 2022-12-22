@@ -124,11 +124,10 @@ function NewPEForm() {
       isPaid: false,
     };
     console.log(ansObj);
-    const docRef = await addDoc(collRef, ansObj);
+
     setPeData(ansObj);
-    setPEID(docRef.id);
     setLoader(false);
-    setPeModal(true);
+    navigate("/pe/checkout");
   };
 
   return (

@@ -22,42 +22,57 @@ import Whatsapp from "./Utils/whatsapp";
 import NewPEForm from "./Components/NewPE/NewPEForm";
 import TyepForm from "./Components/NewPE/TyepForm";
 import UseOfSite from "./Screens/Policy/UseOfSite";
+import TOS from "./Screens/Policy/Tos";
+import Privacy from "./Screens/Policy/Privacy";
+import Refund from "./Screens/Policy/Refund";
+import Help from "./Screens/Help/help";
+import Stripe from "./Components/Payment/Stripe";
+import PEResult from "./Components/NewPE/PEResult";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   const [banner, setBanner] = useState(true);
   return (
-    <div className="pb-10">
-      <Router>
-        {banner && <Banner closeBanner={setBanner} />}
+    <GoogleOAuthProvider clientId="370638679894-7f7e5ni95dmsv3gkhh53ioa5jflipibc.apps.googleusercontent.com">
+      <div className="pb-10">
+        <Router>
+          {banner && <Banner closeBanner={setBanner} />}
 
-        <Routes>
-          <Route element={<Home />} path="/"></Route>
+          <Routes>
+            <Route element={<Home />} path="/"></Route>
 
-          <Route element={<Landing />} path="/app"></Route>
+            <Route element={<Landing />} path="/app"></Route>
 
-          <Route element={<Login />} path="/login"></Route>
+            <Route element={<Login />} path="/login"></Route>
 
-          <Route element={<Register />} path="/signup"></Route>
+            <Route element={<Register />} path="/signup"></Route>
 
-          <Route element={<UA />} path="/university-admission"></Route>
-          <Route element={<VisaC />} path="/visa"></Route>
-          <Route element={<Acc />} path="/accomidation"></Route>
-          <Route element={<NewPEForm />} path="/pe/form"></Route>
-          <Route element={<PEN />} path="/pe"></Route>
-          <Route element={<Checkout />} path="/checkout/:orderId"></Route>
-          <Route element={<PECheckout />} path="/pe/checkout/:formId"></Route>
-          {/* <Route element={<NewPEForm />} path="/newpe"></Route> */}
-          <Route element={<ThanksPage />} path="/thanks/:formId"></Route>
-          <Route element={<NotFound />} path="*"></Route>
-          {/* Policy */}
-          <Route element={<UseOfSite />} path="/useOfSite"></Route>
-        </Routes>
+            <Route element={<UA />} path="/university-admission"></Route>
+            <Route element={<VisaC />} path="/visa"></Route>
+            <Route element={<Acc />} path="/accomidation"></Route>
+            <Route element={<NewPEForm />} path="/pe/form"></Route>
+            <Route element={<PEN />} path="/pe"></Route>
+            <Route element={<Checkout />} path="/checkout/:orderId"></Route>
+            <Route element={<PEResult />} path="/pe/checkout"></Route>
+            {/* <Route element={<NewPEForm />} path="/newpe"></Route> */}
+            <Route element={<ThanksPage />} path="/thanks/:formId"></Route>
+            <Route element={<NotFound />} path="*"></Route>
+            {/* Policy */}
+            <Route element={<UseOfSite />} path="/useOfSite"></Route>
+            <Route element={<TOS />} path="/tos"></Route>
+            <Route element={<Privacy />} path="/privacy"></Route>
+            <Route element={<Refund />} path="/refund"></Route>
+            {/* Help */}
+            <Route element={<Help />} path="/help"></Route>
+            <Route element={<Stripe />} path="/stripe"></Route>
+          </Routes>
 
-        {/* <Whatsapp /> */}
+          {/* <Whatsapp /> */}
 
-        <Footer />
-      </Router>
-    </div>
+          <Footer />
+        </Router>
+      </div>
+    </GoogleOAuthProvider>
   );
 }
 

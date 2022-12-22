@@ -1,23 +1,38 @@
 import React, { useState } from "react";
-import { Document, Page } from "react-pdf";
-import PDF from "./policy/UseofSite.pdf";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import Header from "../../Components/Header";
+import Loader from "../../Components/Loader";
+import pdf from "./policy/UseofSite.pdf";
 
 function UseOfSite() {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   function onDocumentLoadSuccess({ numPages }) {
+    setLoading(false);
     setNumPages(numPages);
+    setPageNumber(1);
+  }
+  function LoadingProgress() {
+    return <Loader />;
   }
   return (
-    <div>
-      <Document file={PDF} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={pageNumber} />
-      </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
-    </div>
+    <>
+      <Header />
+      <center>
+        <div>
+          <iframe
+            src={pdf}
+            frameborder="0"
+            style={{
+              width: "80%",
+              height: "90vh",
+            }}
+          ></iframe>
+        </div>
+      </center>
+    </>
   );
 }
 

@@ -96,7 +96,7 @@ const resources = [
     name: "Help Center",
     description:
       "Get all of your questions answered in our forums or contact support.",
-    href: "#",
+    href: "/help",
     icon: SupportIcon,
   },
   {
@@ -150,7 +150,7 @@ const Header = () => {
   const [userData, setUserData] = useState([]);
 
   return (
-    <Popover className="relative bg-white">
+    <Popover className="relative bg-white font-karla">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center  border-gray-100 py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">

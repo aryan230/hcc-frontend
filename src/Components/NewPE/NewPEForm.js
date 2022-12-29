@@ -107,7 +107,6 @@ function NewPEForm() {
   const [peID, setPEID] = useState("");
   const formSubmitHandler = async (data) => {
     setLoader(true);
-
     const ansObj = {
       board: data.answers.board.value,
       email: data.answers.email.value,
@@ -124,239 +123,244 @@ function NewPEForm() {
       isPaid: false,
     };
     console.log(ansObj);
-
     setPeData(ansObj);
+    const docRef = await addDoc(collRef, ansObj);
     setLoader(false);
-    navigate("/pe/checkout");
+    navigate(`/pe/form/${docRef.id}`);
   };
 
   return (
-    <div className="pe-form-new">
-      <PEModal
-        value={peModal}
-        closePEModal={setPeModal}
-        data={peData}
-        id={peID}
-      />
-      {loader && <PELoader />}
-      <Form
-        formId="1"
-        style={{ fontSize: "34px" }}
-        formObj={{
-          blocks: [
-            {
-              name: "welcome-screen",
-              id: "jg1401r",
-              layout: "split-right",
-              attributes: {
-                attachment: {
-                  type: "image",
-                  url: "https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80",
-                },
-                layout: "split-right",
-                required: true,
-                label: "Welcome to Profile Evaluation 2022",
-                description: "For best experience use a Laptop/PC",
-              },
-            },
-            {
-              name: "short-text",
-              id: "kd12edg",
-              attributes: {
-                required: true,
-                label: "Let's start with your name",
-              },
-            },
-            {
-              name: "email",
-              id: "email",
-              attributes: {
-                required: true,
-                label: "Your Email Address",
-              },
-            },
-            {
-              name: "dropdown",
-              id: "nb913rqw",
-              attributes: {
-                required: true,
-                label: "Where you from?",
-                choices: [
-                  {
-                    label: "India",
-                    value: "India",
-                  },
-                  {
-                    label: "United Kingdom",
-                    value: "United Kingdom",
-                  },
-                  {
-                    label: "Other",
-                    value: "Other",
-                  },
-                ],
-              },
-            },
-            {
-              name: "dropdown",
-              id: "gender",
-              attributes: {
-                required: true,
-                label: "Gender?",
-                choices: [
-                  {
-                    label: "Male",
-                    value: "Male",
-                  },
-                  {
-                    label: "Female",
-                    value: "Female",
-                  },
-                  {
-                    label: "Other",
-                    value: "Other",
-                  },
-                ],
-              },
-            },
-            {
-              name: "number",
-              id: "something",
-              attributes: {
-                required: true,
-                label: "What is your 12th CGPA or %",
-              },
-            },
-            {
-              name: "number",
-              id: "something2",
-              attributes: {
-                required: true,
-                label: "What was your score in English in 12th class?",
-              },
-            },
-            {
-              name: "dropdown",
-              id: "board",
-              attributes: {
-                required: true,
-                label: "Which is your 12th class board?",
-                choices: Boards,
-              },
-            },
-            {
-              name: "number",
-              id: "something3",
-              attributes: {
-                required: true,
-                label: "What is your college CGPA? % or CGPA out of 10",
-              },
-            },
-            {
-              name: "dropdown",
-              id: "gmat",
-              attributes: {
-                required: true,
-                label: "Have you taken or are you planning to take GMAT/GRE?",
-                choices: [
-                  {
-                    label: "Taken",
-                    value: "Taken",
-                  },
-                  {
-                    label: "Planning",
-                    value: "Planning",
-                  },
-                  {
-                    label: "None",
-                    value: "None",
-                  },
-                ],
-              },
-            },
-            {
-              name: "short-text",
-              id: "ptWEXP",
-              attributes: {
-                required: true,
-                label: "Do you have part time work experience ? (Internships) ",
-              },
-            },
-            {
-              name: "short-text",
-              id: "ftWEXP",
-              attributes: {
-                required: true,
-                label: "Do you have full time work experience ?",
-              },
-            },
-            {
-              name: "multiple-choice",
-              id: "gqr1294c",
-              attributes: {
-                required: true,
-                multiple: true,
-                verticalAlign: false,
-                label:
-                  "Do you have any target Countries in mind? (You can choose multiple)",
-                choices: [
-                  {
-                    label: "Overall Europe",
-                    value: "Overall Europe",
-                  },
-                  {
-                    label: "Canada",
-                    value: "Canada",
-                  },
-                  {
-                    label: "UK",
-                    value: "UK",
-                  },
-                  {
-                    label: "USA",
-                    value: "USA",
-                  },
-                  {
-                    label: "Ireland",
-                    value: "Ireland",
-                  },
-                  {
-                    label: "Singapore",
-                    value: "Singapore",
-                  },
-                ],
-              },
-            },
-          ],
-          theme: {
-            font: "Karla",
+    <>
+      <Header />
+      <div className="pe-form-new">
+        <PEModal
+          value={peModal}
+          closePEModal={setPeModal}
+          data={peData}
+          id={peID}
+        />
 
-            buttonsBgColor: "#9b51e0",
-            logo: {
-              src: "",
+        {loader && <PELoader />}
+        <Form
+          formId="1"
+          style={{ fontSize: "34px" }}
+          formObj={{
+            blocks: [
+              {
+                name: "welcome-screen",
+                id: "jg1401r",
+                layout: "split-right",
+                attributes: {
+                  attachment: {
+                    type: "image",
+                    url: "https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80",
+                  },
+                  layout: "split-right",
+                  required: true,
+                  label: "Welcome to Profile Evaluation 2022",
+                  description: "For best experience use a Laptop/PC",
+                },
+              },
+              {
+                name: "short-text",
+                id: "kd12edg",
+                attributes: {
+                  required: true,
+                  label: "Let's start with your name",
+                },
+              },
+              {
+                name: "email",
+                id: "email",
+                attributes: {
+                  required: true,
+                  label: "Your Email Address",
+                },
+              },
+              {
+                name: "dropdown",
+                id: "nb913rqw",
+                attributes: {
+                  required: true,
+                  label: "Where you from?",
+                  choices: [
+                    {
+                      label: "India",
+                      value: "India",
+                    },
+                    {
+                      label: "United Kingdom",
+                      value: "United Kingdom",
+                    },
+                    {
+                      label: "Other",
+                      value: "Other",
+                    },
+                  ],
+                },
+              },
+              {
+                name: "dropdown",
+                id: "gender",
+                attributes: {
+                  required: true,
+                  label: "Gender?",
+                  choices: [
+                    {
+                      label: "Male",
+                      value: "Male",
+                    },
+                    {
+                      label: "Female",
+                      value: "Female",
+                    },
+                    {
+                      label: "Other",
+                      value: "Other",
+                    },
+                  ],
+                },
+              },
+              {
+                name: "number",
+                id: "something",
+                attributes: {
+                  required: true,
+                  label: "What is your 12th CGPA or %",
+                },
+              },
+              {
+                name: "number",
+                id: "something2",
+                attributes: {
+                  required: true,
+                  label: "What was your score in English in 12th class?",
+                },
+              },
+              {
+                name: "dropdown",
+                id: "board",
+                attributes: {
+                  required: true,
+                  label: "Which is your 12th class board?",
+                  choices: Boards,
+                },
+              },
+              {
+                name: "number",
+                id: "something3",
+                attributes: {
+                  required: true,
+                  label: "What is your college CGPA? % or CGPA out of 10",
+                },
+              },
+              {
+                name: "dropdown",
+                id: "gmat",
+                attributes: {
+                  required: true,
+                  label: "Have you taken or are you planning to take GMAT/GRE?",
+                  choices: [
+                    {
+                      label: "Taken",
+                      value: "Taken",
+                    },
+                    {
+                      label: "Planning",
+                      value: "Planning",
+                    },
+                    {
+                      label: "None",
+                      value: "None",
+                    },
+                  ],
+                },
+              },
+              {
+                name: "short-text",
+                id: "ptWEXP",
+                attributes: {
+                  required: true,
+                  label:
+                    "Do you have part time work experience ? (Internships) ",
+                },
+              },
+              {
+                name: "short-text",
+                id: "ftWEXP",
+                attributes: {
+                  required: true,
+                  label: "Do you have full time work experience ?",
+                },
+              },
+              {
+                name: "multiple-choice",
+                id: "gqr1294c",
+                attributes: {
+                  required: true,
+                  multiple: true,
+                  verticalAlign: false,
+                  label:
+                    "Do you have any target Countries in mind? (You can choose multiple)",
+                  choices: [
+                    {
+                      label: "Overall Europe",
+                      value: "Overall Europe",
+                    },
+                    {
+                      label: "Canada",
+                      value: "Canada",
+                    },
+                    {
+                      label: "UK",
+                      value: "UK",
+                    },
+                    {
+                      label: "USA",
+                      value: "USA",
+                    },
+                    {
+                      label: "Ireland",
+                      value: "Ireland",
+                    },
+                    {
+                      label: "Singapore",
+                      value: "Singapore",
+                    },
+                  ],
+                },
+              },
+            ],
+            theme: {
+              font: "Karla",
+
+              buttonsBgColor: "#9b51e0",
+              logo: {
+                src: "",
+              },
+              questionsColor: "#000",
+              answersColor: "#0aa7c2",
+              buttonsFontColor: "#fff",
+              buttonsBorderRadius: 25,
+              errorsFontColor: "#fff",
+              errorsBgColor: "#f00",
+              progressBarFillColor: "#000",
+              progressBarBgColor: "#ccc",
             },
-            questionsColor: "#000",
-            answersColor: "#0aa7c2",
-            buttonsFontColor: "#fff",
-            buttonsBorderRadius: 25,
-            errorsFontColor: "#fff",
-            errorsBgColor: "#f00",
-            progressBarFillColor: "#000",
-            progressBarBgColor: "#ccc",
-          },
-        }}
-        onSubmit={(
-          data,
-          { completeForm, setIsSubmitting, goToBlock, setSubmissionErr }
-        ) => {
-          console.log(data);
-          setTimeout(() => {
-            setIsSubmitting(false);
-            formSubmitHandler(data);
-          }, 500);
-        }}
-      />
-    </div>
+          }}
+          onSubmit={(
+            data,
+            { completeForm, setIsSubmitting, goToBlock, setSubmissionErr }
+          ) => {
+            console.log(data);
+            setTimeout(() => {
+              setIsSubmitting(false);
+              formSubmitHandler(data);
+            }, 500);
+          }}
+        />
+      </div>
+    </>
   );
 }
 

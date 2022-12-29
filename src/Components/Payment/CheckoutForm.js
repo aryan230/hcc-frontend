@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   useStripe,
   useElements,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import PELoader from "../../Utils/PELoader";
 
-function CheckoutForm() {
+function CheckoutForm({ paymentSucess, setPaymentModal }) {
   const stripe = useStripe();
   const elements = useElements();
-
+  const [loader, setLoader] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -17,20 +18,27 @@ function CheckoutForm() {
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
-    const { error } = await stripe.confirmPayment({
+    setLoader(true);
+    const { error, sucess } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: "https://thehonestcareerco.in/thanks/1",
-      },
+      redirect: "if_required",
+      confirmParams: {},
     });
+
+    if (sucess) {
+      console.log(sucess);
+    }
 
     if (error) {
       console.log(error.message);
     }
+    paymentSucess(true);
+    setPaymentModal(false);
+    setLoader(false);
   };
   return (
     <div className="max-w-xl p-20 rounded-lg" id="payment-form">
+      {loader && <PELoader />}
       <PaymentElement />
       <button
         onClick={handleSubmit}
@@ -38,6 +46,22 @@ function CheckoutForm() {
       >
         Pay Now
       </button>
+      <div className="mt-2">
+        <a
+          href="/"
+          className="text-lg font-karla text-indigo-600 tracking-tight"
+        >
+          Need Help?
+        </a>
+      </div>
+      <div>
+        <a
+          href="/"
+          className="text-lg font-karla text-indigo-600 tracking-tight"
+        >
+          Pay through upi/gpay/phonepay
+        </a>
+      </div>
     </div>
   );
 }

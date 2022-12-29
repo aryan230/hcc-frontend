@@ -3,6 +3,7 @@ import { createStore } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
+  userGoogleReducer,
   userLoginReducer,
   userRegisterReducer,
 } from "./redux/reducers/userReducers";
@@ -43,6 +44,9 @@ const initialState = {
     cartItems: cartItemsFromStorage,
   },
   userLogin: {
+    userInfo: userInfoFromStorage,
+  },
+  userGoogle: {
     userInfo: userInfoFromStorage,
   },
 };

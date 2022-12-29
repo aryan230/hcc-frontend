@@ -175,101 +175,190 @@ const Checkout = () => {
 
         <main className="relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2">
           <h1 className="sr-only">Checkout</h1>
+          {order.isPaid ? (
+            <section
+              aria-labelledby="summary-heading"
+              className="bg-emerald-900 text-indigo-300 pt-6 pb-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
+            >
+              <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
+                <h2 id="summary-heading" className="sr-only">
+                  Order summary
+                </h2>
 
-          <section
-            aria-labelledby="summary-heading"
-            className="bg-indigo-900 text-indigo-300 pt-6 pb-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
-          >
-            <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
-              <h2 id="summary-heading" className="sr-only">
-                Order summary
-              </h2>
+                <dl>
+                  <dt className="text-sm font-medium">Amount due</dt>
+                  <dd className="mt-1 text-3xl font-extrabold text-white">
+                    ₹29,900
+                  </dd>
+                </dl>
 
-              <dl>
-                <dt className="text-sm font-medium">Amount due</dt>
-                <dd className="mt-1 text-3xl font-extrabold text-white">
-                  ₹29,900
-                </dd>
-              </dl>
-
-              <ul
-                role="list"
-                className="text-sm font-medium divide-y divide-white divide-opacity-10"
-              >
-                {products.map((product) => (
-                  <li
-                    key={product.id}
-                    className="flex items-start py-6 space-x-4"
-                  >
-                    <img
-                      src={product.imageSrc}
-                      alt={product.imageAlt}
-                      className="flex-none w-20 h-20 rounded-md object-center object-cover"
-                    />
-                    <div className="flex-auto space-y-1">
-                      <h3 className="text-white">{product.name}</h3>
-                      <p>{product.color}</p>
-                      <p>{product.size}</p>
-                    </div>
-                    <p className="flex-none text-base font-medium text-white">
-                      {product.price}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-
-              <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
-                <form>
-                  <label
-                    htmlFor="discount-code"
-                    className="block text-sm font-medium text-white"
-                  >
-                    Discount code
-                  </label>
-                  <div className="flex space-x-4 mt-1">
-                    <input
-                      type="text"
-                      id="discount-code"
-                      name="discount-code"
-                      className="uppercase text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm"
-                    />
-                    <button
-                      type="submit"
-                      className="bg-gray-200 text-sm font-medium text-gray-600 rounded-md px-4 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                <ul
+                  role="list"
+                  className="text-sm font-medium divide-y divide-white divide-opacity-10"
+                >
+                  {products.map((product) => (
+                    <li
+                      key={product.id}
+                      className="flex items-start py-6 space-x-4"
                     >
-                      Apply
-                    </button>
+                      <img
+                        src={product.imageSrc}
+                        alt={product.imageAlt}
+                        className="flex-none w-20 h-20 rounded-md object-center object-cover"
+                      />
+                      <div className="flex-auto space-y-1">
+                        <h3 className="text-white">{product.name}</h3>
+                        <p>{product.color}</p>
+                        <p>{product.size}</p>
+                      </div>
+                      <p className="flex-none text-base font-medium text-white">
+                        {product.price}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+
+                <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
+                  <form>
+                    <label
+                      htmlFor="discount-code"
+                      className="block text-sm font-medium text-white"
+                    >
+                      Discount code
+                    </label>
+                    <div className="flex space-x-4 mt-1">
+                      <input
+                        type="text"
+                        id="discount-code"
+                        name="discount-code"
+                        className="uppercase text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm"
+                      />
+                      <button
+                        type="submit"
+                        className="bg-gray-200 text-sm font-medium text-gray-600 rounded-md px-4 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </form>
+                  <div className="flex items-center justify-between">
+                    <dt>Subtotal (Course Fees)</dt>
+                    <dd>₹ {coursePrice}</dd>
                   </div>
-                </form>
-                <div className="flex items-center justify-between">
-                  <dt>Subtotal (Course Fees)</dt>
-                  <dd>₹ {coursePrice}</dd>
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <dt>Total Discount</dt>
-                  <dd>₹ {discountPrice}</dd>
-                </div>
+                  <div className="flex items-center justify-between">
+                    <dt>Total Discount</dt>
+                    <dd>₹ {discountPrice}</dd>
+                  </div>
 
-                <div className="flex items-center justify-between">
-                  <dt>Taxes</dt>
-                  <dd> ₹ {taxPrice}</dd>
-                </div>
+                  <div className="flex items-center justify-between">
+                    <dt>Taxes</dt>
+                    <dd> ₹ {taxPrice}</dd>
+                  </div>
 
-                <div className="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6">
-                  <dt className="text-base">Grand Total</dt>
-                  <dd className="text-base">₹ {totalPrice}</dd>
-                </div>
-              </dl>
-            </div>
-          </section>
+                  <div className="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6">
+                    <dt className="text-base">Grand Total</dt>
+                    <dd className="text-base">₹ {totalPrice}</dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+          ) : (
+            <section
+              aria-labelledby="summary-heading"
+              className="bg-indigo-900 text-indigo-300 pt-6 pb-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
+            >
+              <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
+                <h2 id="summary-heading" className="sr-only">
+                  Order summary
+                </h2>
+
+                <dl>
+                  <dt className="text-sm font-medium">Amount due</dt>
+                  <dd className="mt-1 text-3xl font-extrabold text-white">
+                    ₹29,900
+                  </dd>
+                </dl>
+
+                <ul
+                  role="list"
+                  className="text-sm font-medium divide-y divide-white divide-opacity-10"
+                >
+                  {products.map((product) => (
+                    <li
+                      key={product.id}
+                      className="flex items-start py-6 space-x-4"
+                    >
+                      <img
+                        src={product.imageSrc}
+                        alt={product.imageAlt}
+                        className="flex-none w-20 h-20 rounded-md object-center object-cover"
+                      />
+                      <div className="flex-auto space-y-1">
+                        <h3 className="text-white">{product.name}</h3>
+                        <p>{product.color}</p>
+                        <p>{product.size}</p>
+                      </div>
+                      <p className="flex-none text-base font-medium text-white">
+                        {product.price}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+
+                <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
+                  <form>
+                    <label
+                      htmlFor="discount-code"
+                      className="block text-sm font-medium text-white"
+                    >
+                      Discount code
+                    </label>
+                    <div className="flex space-x-4 mt-1">
+                      <input
+                        type="text"
+                        id="discount-code"
+                        name="discount-code"
+                        className="uppercase text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm"
+                      />
+                      <button
+                        type="submit"
+                        className="bg-gray-200 text-sm font-medium text-gray-600 rounded-md px-4 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </form>
+                  <div className="flex items-center justify-between">
+                    <dt>Subtotal (Course Fees)</dt>
+                    <dd>₹ {coursePrice}</dd>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <dt>Total Discount</dt>
+                    <dd>₹ {discountPrice}</dd>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <dt>Taxes</dt>
+                    <dd> ₹ {taxPrice}</dd>
+                  </div>
+
+                  <div className="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6">
+                    <dt className="text-base">Grand Total</dt>
+                    <dd className="text-base">₹ {totalPrice}</dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+          )}
 
           <section
             aria-labelledby="payment-and-shipping-heading"
             className="py-16 lg:max-w-lg lg:w-full lg:mx-auto lg:pt-0 lg:pb-24 lg:row-start-1 lg:col-start-1"
           >
             <h2 id="payment-and-shipping-heading" className="sr-only">
-              Payment and shipping details
+              Payment and details
             </h2>
             {userInfo ? (
               <form>
@@ -363,7 +452,7 @@ const Checkout = () => {
                       id="shipping-heading"
                       className="text-lg font-medium text-gray-900"
                     >
-                      Shipping address
+                      Your address
                     </h3>
 
                     <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-3">

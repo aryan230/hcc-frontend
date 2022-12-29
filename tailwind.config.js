@@ -22,6 +22,7 @@ module.exports = {
         karla: "Karla",
         body: "Poppins",
         code: "Roboto Mono",
+        space: "Space Grotesk",
       },
     },
   },

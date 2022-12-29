@@ -1,6 +1,9 @@
 import axios from "axios";
 import {
   USER_DETAILS_RESET,
+  USER_GOOGLE_FAIL,
+  USER_GOOGLE_REQUEST,
+  USER_GOOGLE_SUCESS,
   USER_LIST_RESET,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -11,10 +14,10 @@ import {
   USER_REGISTER_SUCESS,
 } from "../constants/userConstants";
 
-export const login = (email, password) => async (dispatch) => {
+export const loginUserGoogle = (name, email) => async (dispatch) => {
   try {
     dispatch({
-      type: USER_LOGIN_REQUEST,
+      type: USER_GOOGLE_REQUEST,
     });
     const config = {
       headers: {
@@ -22,25 +25,91 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "https://hcc-backend.onrender.com/api/users/login",
-      { email, password },
+      "http://localhost:3001/api/users/google",
+      { name, email },
       config
     );
 
     dispatch({
-      type: USER_LOGIN_SUCESS,
+      type: USER_GOOGLE_SUCESS,
       payload: data,
     });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
-      type: USER_LOGIN_FAIL,
+      type: USER_GOOGLE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+export const login = (email, password, name, type) => async (dispatch) => {
+  if (type === "google") {
+    try {
+      dispatch({
+        type: USER_LOGIN_REQUEST,
+      });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:3001/api/users/google",
+        { name, email, password },
+        config
+      );
+
+      dispatch({
+        type: USER_LOGIN_SUCESS,
+        payload: data,
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_LOGIN_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  } else {
+    try {
+      dispatch({
+        type: USER_LOGIN_REQUEST,
+      });
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "https://hcc-backend.onrender.com/api/users/login",
+        { email, password },
+        config
+      );
+
+      dispatch({
+        type: USER_LOGIN_SUCESS,
+        payload: data,
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_LOGIN_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
   }
 };
 

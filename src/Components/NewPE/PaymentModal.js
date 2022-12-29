@@ -6,7 +6,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Payment/CheckoutForm";
 
-function PaymentModal({ setPaymentModal, value }) {
+function PaymentModal({ setPaymentModal, value, paymentSucess }) {
   const [open, setOpen] = useState(value);
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -68,7 +68,10 @@ function PaymentModal({ setPaymentModal, value }) {
             <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full sm:p-6">
               {stripePromise && clientSecret && (
                 <Elements stripe={stripePromise} options={{ clientSecret }}>
-                  <CheckoutForm />
+                  <CheckoutForm
+                    paymentSucess={paymentSucess}
+                    setPaymentModal={setPaymentModal}
+                  />
                 </Elements>
               )}
             </div>

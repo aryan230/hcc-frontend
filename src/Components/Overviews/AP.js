@@ -12,7 +12,7 @@ import { createOrder, listMyOrders } from "../../redux/actions/orderAction";
 import OrderModal from "../Order/orderModal";
 import InsideLoader from "../InsideLoader";
 import Loader from "../Loader";
-import APImg from "../../assets/ap6.png";
+import APImg from "../../assets/ap9.png";
 const product = {
   name: "UNIVERSITY ADMISSION 2023",
   price: "₹25,000",

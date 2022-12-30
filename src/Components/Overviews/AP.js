@@ -12,7 +12,8 @@ import { createOrder, listMyOrders } from "../../redux/actions/orderAction";
 import OrderModal from "../Order/orderModal";
 import InsideLoader from "../InsideLoader";
 import Loader from "../Loader";
-import APImg from "../../assets/ap9.png";
+import APImg from "../../assets/ap14.png";
+import APImgSM from "../../assets/ap10.png";
 const product = {
   name: "UNIVERSITY ADMISSION 2023",
   price: "₹25,000",
@@ -177,12 +178,11 @@ const AP = () => {
             />
           </div>
         </div> */}
+        <div className="ua-image-2">
+          <img src={APImgSM} alt="" className="max-w-full max-h-full" />
+        </div>
         <div className="ua-image">
-          <img
-            src={APImg}
-            alt=""
-            className="max-w-full max-h-full rounded-3xl"
-          />
+          <img src={APImg} alt="" className="max-w-full max-h-full" />
         </div>
 
         {/* Product info */}

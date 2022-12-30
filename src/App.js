@@ -29,6 +29,8 @@ import Help from "./Screens/Help/help";
 import Stripe from "./Components/Payment/Stripe";
 import PEResult from "./Components/NewPE/PEResult";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import PETrack from "./Components/NewPE/PETrack";
+import ContactPage from "./Screens/Help/ContactPage";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -54,8 +56,10 @@ function App() {
             <Route element={<PEN />} path="/pe"></Route>
             <Route element={<Checkout />} path="/checkout/:orderId"></Route>
             <Route element={<PEResult />} path="/pe/form/:id"></Route>
+            <Route element={<PETrack />} path="/pe/track"></Route>
             {/* <Route element={<NewPEForm />} path="/newpe"></Route> */}
             <Route element={<ThanksPage />} path="/thanks/:formId"></Route>
+            <Route element={<ContactPage />} path="/contact"></Route>
             <Route element={<NotFound />} path="*"></Route>
             {/* Policy */}
             <Route element={<UseOfSite />} path="/useOfSite"></Route>

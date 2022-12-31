@@ -49,6 +49,7 @@ function PEResult() {
   const [paymentModal, setPaymentModal] = useState(false);
   const [formDataLoading, setFormDataLoading] = useState(true);
   const [formData, setFormData] = useState();
+  const [idError, setIdError] = useState(false);
   useEffect(() => {
     const collRef = collection(db, "pe-forms");
     if (!formData) {
@@ -59,6 +60,9 @@ function PEResult() {
             setFormData(doc.data());
             console.log(doc.data());
             setFormDataLoading(false);
+          } else {
+            setFormDataLoading(false);
+            setIdError(true);
           }
         });
       });
@@ -126,7 +130,7 @@ function PEResult() {
           paymentSucess={setPaymentSucess}
         />
       )}
-
+      {formDataLoading && <PELoader />}
       <div className="relative bg-white font-karla h-screen">
         <div className="absolute inset-0" aria-hidden="true">
           {paymentSucess ? (
@@ -304,8 +308,28 @@ function PEResult() {
         </div>
       </div>
     </>
-  ) : (
+  ) : formDataLoading ? (
     <PELoader />
+  ) : (
+    idError && (
+      <>
+        <Header />
+        <div className="w-full h-screen flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-space font-semibold text-red-600">
+            {" "}
+            The Form ID {id} could not be found. <br />
+            Please check and try again.
+            <br />
+            <Link
+              to="/pe/track"
+              className="text-indigo-700 font-karla text-xl underline mt-5"
+            >
+              Go back
+            </Link>
+          </h1>
+        </div>
+      </>
+    )
   );
 }
 

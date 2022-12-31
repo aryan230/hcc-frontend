@@ -12,8 +12,25 @@ import Team from "../Components/Team";
 import Testimonials from "../Components/testimonials";
 import TestimonialsNew from "../Components/testimonialsNew";
 import Contact from "../Utils/Contact";
-
+import { motion, Variants } from "framer-motion";
 const Home = () => {
+  const cardAnimate = {
+    offScreen: {
+      x: -100,
+
+      opacity: 0,
+    },
+    onScreen: {
+      x: 0,
+      opacity: 1,
+      rotate: [0, 2, 0],
+      transition: {
+        duration: 1,
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
   return (
     <div className="overflow-x-hidden">
       <Hero />

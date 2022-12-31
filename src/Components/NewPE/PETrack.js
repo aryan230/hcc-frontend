@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header";
 
 function PETrack() {
+  const navigate = useNavigate();
+  const [peID, setPeID] = useState("");
   return (
     <>
       <Header />
@@ -11,7 +14,7 @@ function PETrack() {
           className="absolute inset-0 object-cover w-full h-full"
           alt=""
         />
-        <div className="relative bg-opacity-75 bg-indigo-700 h-screen">
+        <div className="relative bg-opacity-75 bg-purple-900 h-screen">
           <svg
             className="absolute inset-x-0 bottom-0 text-white"
             viewBox="0 0 1160 163"
@@ -25,18 +28,19 @@ function PETrack() {
             <div className="flex flex-col items-center justify-between xl:flex-row">
               <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12">
                 <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold tracking-tight text-white sm:text-4xl sm:leading-none">
-                  The quick, brown fox <br className="hidden md:block" />
-                  jumps over a lazy dog
+                  Ready to have a look at your{" "}
+                  <br className="hidden md:block" />
+                  Profile Evaluation Report.
                 </h2>
                 <p className="max-w-xl mb-4 text-base text-gray-200 md:text-lg">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudan, totam rem aperiam, eaque ipsa
-                  quae.
+                  If you already haven't applied yet in your application, you
+                  can apply for a new profile evaluation report by clicking on
+                  the link below.
                 </p>
                 <a
-                  href="/"
+                  href="/pe/form"
                   aria-label=""
-                  className="inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-accent-400 hover:text-teal-accent-700"
+                  className="inline-flex items-center font-semibold tracking-wider transition-colors duration-200 text-teal-400 hover:text-teal-accent-700"
                 >
                   Learn more
                   <svg
@@ -51,67 +55,48 @@ function PETrack() {
               <div className="w-full max-w-xl xl:px-8 xl:w-5/12">
                 <div className="bg-white rounded shadow-2xl p-7 sm:p-10">
                   <h3 className="mb-4 text-xl font-semibold sm:text-center sm:mb-6 sm:text-2xl">
-                    Sign up for updates
+                    PE Report
                   </h3>
-                  <form>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      navigate(`/pe/form/${peID}`);
+                    }}
+                  >
                     <div className="mb-1 sm:mb-2">
                       <label
                         htmlFor="firstName"
                         className="inline-block mb-1 font-medium"
                       >
-                        First name
+                        Enter your PE ID
                       </label>
                       <input
-                        placeholder="John"
+                        placeholder="HEX ID"
                         required
                         type="text"
                         className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
                         id="firstName"
                         name="firstName"
+                        onChange={(e) => {
+                          setPeID(e.target.value);
+                        }}
                       />
                     </div>
-                    <div className="mb-1 sm:mb-2">
-                      <label
-                        htmlFor="lastName"
-                        className="inline-block mb-1 font-medium"
-                      >
-                        Last name
-                      </label>
-                      <input
-                        placeholder="Doe"
-                        required
-                        type="text"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="lastName"
-                        name="lastName"
-                      />
-                    </div>
-                    <div className="mb-1 sm:mb-2">
-                      <label
-                        htmlFor="email"
-                        className="inline-block mb-1 font-medium"
-                      >
-                        E-mail
-                      </label>
-                      <input
-                        placeholder="john.doe@example.org"
-                        required
-                        type="text"
-                        className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-                        id="email"
-                        name="email"
-                      />
-                    </div>
+
                     <div className="mt-4 mb-2 sm:mb-4">
                       <button
                         type="submit"
-                        className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                        className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-600 hover:bg-purple-700 focus:shadow-outline focus:outline-none"
                       >
-                        Subscribe
+                        Track
                       </button>
                     </div>
                     <p className="text-xs text-gray-600 sm:text-sm">
-                      We respect your privacy. Unsubscribe at any time.
+                      We respect your privacy. Read our privacy policy{" "}
+                      <Link className="text-indigo-700 underline" to="/privacy">
+                        here
+                      </Link>
+                      .
                     </p>
                   </form>
                 </div>

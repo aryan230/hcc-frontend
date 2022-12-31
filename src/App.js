@@ -31,6 +31,7 @@ import PEResult from "./Components/NewPE/PEResult";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import PETrack from "./Components/NewPE/PETrack";
 import ContactPage from "./Screens/Help/ContactPage";
+import Apply from "./Screens/Apply";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -52,6 +53,7 @@ function App() {
             <Route element={<UA />} path="/university-admission"></Route>
             <Route element={<VisaC />} path="/visa"></Route>
             <Route element={<Acc />} path="/accomidation"></Route>
+            <Route element={<Apply />} path="/apply"></Route>
             <Route element={<NewPEForm />} path="/pe/form"></Route>
             <Route element={<PEN />} path="/pe"></Route>
             <Route element={<Checkout />} path="/checkout/:orderId"></Route>

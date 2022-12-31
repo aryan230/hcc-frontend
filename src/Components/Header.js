@@ -96,7 +96,7 @@ const resources = [
     name: "Help Center",
     description:
       "Get all of your questions answered in our forums or contact support.",
-    href: "/help",
+    href: "/contact",
     icon: SupportIcon,
   },
   {

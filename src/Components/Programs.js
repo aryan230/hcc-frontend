@@ -20,6 +20,8 @@ import {
   AcademicCapIcon,
   ColorSwatchIcon,
 } from "@heroicons/react/outline";
+
+import { motion, Variants } from "framer-motion";
 const supportLinks = [
   {
     name: "Application Process",
@@ -27,6 +29,7 @@ const supportLinks = [
     description:
       "It all starts from choosing best universities from all around  globe, our experts help you out with the process until you reach at your dream university.",
     icon: AcademicCapIcon,
+    img: "https://cdn-icons-png.flaticon.com/512/9285/9285039.png",
   },
   {
     name: "Visa Consultancy",
@@ -34,6 +37,7 @@ const supportLinks = [
     description:
       "We will help you prepare your visa documents and simplify the otherwise cumbersome process of getting a visa.",
     icon: PaperAirplaneIcon,
+    img: "https://cdn-icons-png.flaticon.com/512/7058/7058467.png",
   },
   {
     name: "Accommodation / Pre-Departure Support",
@@ -41,6 +45,7 @@ const supportLinks = [
     description:
       "We will help you find out the best accommodation according to one’s need.",
     icon: HomeIcon,
+    img: "https://cdn-icons-png.flaticon.com/512/5241/5241729.png",
   },
   {
     name: "Profile Evaluation",
@@ -48,6 +53,7 @@ const supportLinks = [
     description:
       "Get your profile evaluated by our best counsellor’s. And match which colleges accept your profile.",
     icon: ClipboardCheckIcon,
+    img: "",
   },
   {
     name: "IELTS Preparation",
@@ -55,6 +61,7 @@ const supportLinks = [
     description:
       "Learn IELTS online at your own pace. Start today and improve your skills.",
     icon: ColorSwatchIcon,
+    img: "",
   },
   {
     name: "SOP Editing",
@@ -62,10 +69,44 @@ const supportLinks = [
     description:
       "Your SOP is your chance to make yourself stand out from a crowd of people with similar educational qualifications as yours. Get your SOP edited/drafted by our expert team of editors.",
     icon: NewspaperIcon,
+    img: "https://cdn-icons-png.flaticon.com/512/",
   },
 ];
 
 const Programs = () => {
+  const cardAnimate = {
+    offScreen: {
+      x: -100,
+
+      opacity: 0,
+    },
+    onScreen: {
+      x: 0,
+      opacity: 1,
+      rotate: [0, 2, 0],
+      transition: {
+        duration: 1,
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
+  const textAnimate = {
+    offScreen: {
+      y: 100,
+      opacity: 0,
+    },
+    onScreen: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: 0.2,
+        duration: 2,
+        type: "spring",
+      },
+    },
+  };
   return (
     <div className="bg-white">
       {/* Header */}
@@ -82,9 +123,14 @@ const Programs = () => {
           />
         </div>
         <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">
+          <motion.h1
+            className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl font-karla"
+            initial={"offScreen"}
+            whileInView={"onScreen"}
+            variants={textAnimate}
+          >
             Our Programs
-          </h1>
+          </motion.h1>
           {/* <p className="mt-6 max-w-3xl text-xl text-gray-300">
             Varius facilisi mauris sed sit. Non sed et duis dui leo, vulputate
             id malesuada non. Cras aliquet purus dui laoreet diam sed lacus,
@@ -101,7 +147,53 @@ const Programs = () => {
         <h2 className="sr-only" id="contact-heading">
           Contact us
         </h2>
-        <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8">
+        <div className="relative py-16">
+          <div className="container relative m-auto px-6 text-gray-500 md:px-12">
+            <motion.div
+              className="grid gap-6 md:mx-auto md:w-8/12 lg:w-full lg:grid-cols-3"
+              initial={"offScreen"}
+              whileInView={"onScreen"}
+              exit={"offScreen"}
+              viewport={{ once: false }}
+              transition={{ staggerChildren: 0.5 }}
+            >
+              {supportLinks.map((link) => (
+                <motion.div
+                  variants={cardAnimate}
+                  key={link.name}
+                  className="group space-y-6 border font-karla border-gray-100 h-fit rounded-3xl bg-white  px-8 py-12 text-center shadow-2xl shadow-gray-600/10"
+                >
+                  <link.icon
+                    className="mx-auto w-12 text-stone-700"
+                    alt="illustration"
+                    loading="lazy"
+                  />
+                  {/* <img
+                    className="mx-auto w-20 text-indigo-700"
+                    src={link.img}
+                    alt="illustration"
+                    loading="lazy"
+                  /> */}
+                  <motion.h3
+                    className="text-2xl font-black text-stone-700"
+                    variants={textAnimate}
+                  >
+                    {link.name}
+                  </motion.h3>
+                  <motion.p variants={textAnimate}>{link.description}</motion.p>
+                  <motion.a
+                    variants={textAnimate}
+                    href={link.href}
+                    className="relative mx-auto flex h-10 w-10 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-200  before:transition before:duration-300 group-hover:before:scale-125"
+                  >
+                    <span className="text-primary">→</span>
+                  </motion.a>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+        {/* <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8">
           {supportLinks.map((link) => (
             <div
               key={link.name}
@@ -131,7 +223,7 @@ const Programs = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
     </div>
   );

@@ -10,7 +10,7 @@ function Apply() {
           <div className="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
             <div>
               <h1 className="text-4xl font-space">
-                We believe to get you an offer letter from the best possible
+                We believe to get you a offer letter from the best possible
                 univ.
               </h1>
               <p className="mt-5 font-karla">

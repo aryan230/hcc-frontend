@@ -6,7 +6,12 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Payment/CheckoutForm";
 
-function PaymentModal({ setPaymentModal, value, paymentSucess }) {
+function PaymentModal({
+  setPaymentModal,
+  value,
+  paymentSucess,
+  paymentDetails,
+}) {
   const [open, setOpen] = useState(value);
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
@@ -17,7 +22,7 @@ function PaymentModal({ setPaymentModal, value, paymentSucess }) {
       setStripePromise(loadStripe(publishableKey));
     });
   }, []);
-
+  console.log(paymentDetails);
   useEffect(() => {
     fetch("http://localhost:3001/api/create-payment-intent", {
       method: "POST",
@@ -71,6 +76,7 @@ function PaymentModal({ setPaymentModal, value, paymentSucess }) {
                   <CheckoutForm
                     paymentSucess={paymentSucess}
                     setPaymentModal={setPaymentModal}
+                    paymentDetails={paymentDetails}
                   />
                 </Elements>
               )}

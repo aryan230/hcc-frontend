@@ -5,9 +5,12 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import PELoader from "../../Utils/PELoader";
+import { useDispatch } from "react-redux";
+import { payOrder } from "../../redux/actions/orderAction";
 
-function CheckoutForm({ paymentSucess, setPaymentModal }) {
+function CheckoutForm({ paymentSucess, setPaymentModal, paymentDetails }) {
   const stripe = useStripe();
+  const dispatch = useDispatch();
   const elements = useElements();
   const [loader, setLoader] = useState(false);
   const handleSubmit = async (e) => {
@@ -19,18 +22,16 @@ function CheckoutForm({ paymentSucess, setPaymentModal }) {
       return;
     }
     setLoader(true);
-    const { error, sucess } = await stripe.confirmPayment({
+    const stripeData = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
       confirmParams: {},
     });
-
-    if (sucess) {
-      console.log(sucess);
+    if (stripeData.paymentIntent.status === "succeeded") {
+      dispatch(payOrder(paymentDetails._id, stripeData));
     }
-
-    if (error) {
-      console.log(error.message);
+    if (stripeData.error) {
+      console.log(stripeData.error.message);
     }
     paymentSucess(true);
     setPaymentModal(false);

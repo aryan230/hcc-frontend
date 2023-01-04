@@ -120,11 +120,14 @@ https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.795);
+  background-color: rgba(255, 255, 255, 0.76);
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.loader-inside {
 }
 
 .inside-loader {

@@ -32,6 +32,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import PETrack from "./Components/NewPE/PETrack";
 import ContactPage from "./Screens/Help/ContactPage";
 import Apply from "./Screens/Apply";
+import Mail from "./Screens/Mail";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -71,6 +72,8 @@ function App() {
             {/* Help */}
             <Route element={<Help />} path="/help"></Route>
             <Route element={<Stripe />} path="/stripe"></Route>
+            {/* Mail */}
+            <Route element={<Mail />} path="/mail/:id"></Route>
           </Routes>
 
           {/* <Whatsapp /> */}

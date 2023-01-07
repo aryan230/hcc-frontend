@@ -33,6 +33,8 @@ import PETrack from "./Components/NewPE/PETrack";
 import ContactPage from "./Screens/Help/ContactPage";
 import Apply from "./Screens/Apply";
 import Mail from "./Screens/Mail";
+import UserList from "./Screens/Admin/UserList";
+import EmailList from "./Screens/Admin/EmailList";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -74,9 +76,12 @@ function App() {
             <Route element={<Stripe />} path="/stripe"></Route>
             {/* Mail */}
             <Route element={<Mail />} path="/mail/:id"></Route>
+            <Route element={<UserList />} path="/admin/users"></Route>
+            <Route element={<EmailList />} path="/admin/email"></Route>
           </Routes>
 
           {/* <Whatsapp /> */}
+          {/* Admin */}
 
           <Footer />
         </Router>

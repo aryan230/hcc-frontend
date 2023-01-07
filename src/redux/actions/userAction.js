@@ -4,7 +4,10 @@ import {
   USER_GOOGLE_FAIL,
   USER_GOOGLE_REQUEST,
   USER_GOOGLE_SUCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
   USER_LIST_RESET,
+  USER_LIST_SUCESS,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCESS,
@@ -158,6 +161,36 @@ export const register = (dataGiven) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listUsers = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_LIST_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`http://localhost:3001/api/users`, config);
+
+    dispatch({
+      type: USER_LIST_SUCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

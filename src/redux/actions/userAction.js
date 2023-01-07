@@ -28,7 +28,7 @@ export const loginUserGoogle = (name, email) => async (dispatch) => {
       },
     };
     const { data } = await axios.post(
-      "http://localhost:3001/api/users/google",
+      "https://hcc-backend.onrender.com/api/users/google",
       { name, email },
       config
     );
@@ -62,7 +62,7 @@ export const login = (email, password, name, type) => async (dispatch) => {
         },
       };
       const { data } = await axios.post(
-        "http://localhost:3001/api/users/google",
+        "https://hcc-backend.onrender.com/api/users/google",
         { name, email, password },
         config
       );
@@ -182,7 +182,10 @@ export const listUsers = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`http://localhost:3001/api/users`, config);
+    const { data } = await axios.get(
+      `https://hcc-backend.onrender.com/api/users`,
+      config
+    );
 
     dispatch({
       type: USER_LIST_SUCESS,

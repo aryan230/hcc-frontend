@@ -22,6 +22,7 @@ const people = [
 ];
 function EmailList() {
   const [data, setData] = useState();
+  const [subject, setSubject] = useState();
   const collRef = collection(db, "emails");
 
   // It state will contain the error when
@@ -131,7 +132,7 @@ function EmailList() {
                       Emails Send
                     </dt>
                     <dd className="order-1 text-5xl font-extrabold text-indigo-600">
-                      0
+                      {data && data.length}
                     </dd>
                   </div>
                   <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
@@ -182,6 +183,7 @@ function EmailList() {
                 strokeLinejoin="round"
               />
             </svg>
+
             <div className="flex text-sm text-gray-600">
               <label
                 htmlFor="file-upload"
@@ -204,6 +206,7 @@ function EmailList() {
             <p className="text-xs text-gray-500">only csv</p>
           </div>
         </div>
+
         <button
           type="submit"
           className="my-5 inline-flex items-center px-6 py-3 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

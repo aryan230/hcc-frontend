@@ -35,6 +35,8 @@ import Apply from "./Screens/Apply";
 import Mail from "./Screens/Mail";
 import UserList from "./Screens/Admin/UserList";
 import EmailList from "./Screens/Admin/EmailList";
+import OrderList from "./Screens/Admin/OrderList";
+import ProductList from "./Screens/Admin/ProductList";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -77,7 +79,9 @@ function App() {
             {/* Mail */}
             <Route element={<Mail />} path="/mail/:id"></Route>
             <Route element={<UserList />} path="/admin/users"></Route>
+            <Route element={<OrderList />} path="/admin/orders"></Route>
             <Route element={<EmailList />} path="/admin/email"></Route>
+            <Route element={<ProductList />} path="/admin/products"></Route>
           </Routes>
 
           {/* <Whatsapp /> */}

@@ -3,7 +3,15 @@ import React, { useEffect, useState } from "react";
 import Header from "../../Components/Header";
 import Papa from "papaparse";
 import axios from "axios";
-import { addDoc, collection, onSnapshot, updateDoc } from "firebase/firestore";
+import toast, { Toaster } from "react-hot-toast";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 
 // Allowed extensions for input file
@@ -22,12 +30,15 @@ const people = [
 ];
 function EmailList() {
   const [data, setData] = useState();
+  const [emailSend, setEmailSend] = useState();
+  const [emailQuery, setEmailQuery] = useState();
   const [subject, setSubject] = useState();
   const collRef = collection(db, "emails");
 
   // It state will contain the error when
   // correct file extension is not used
   const [error, setError] = useState("");
+  const notify = () => toast.success("Sucessfully deleted");
 
   // It will store the file uploaded by the user
   const [file, setFile] = useState("");
@@ -74,7 +85,7 @@ function EmailList() {
         });
 
         axios
-          .post("https://hcc-emails.onrender.com/api/email", {
+          .post("http://localhost:3001/api/email", {
             name: element.FIRST + " " + element.LAST,
             email: element.EMAIL,
           })
@@ -97,19 +108,38 @@ function EmailList() {
     reader.readAsText(file);
   };
 
+  const deleteEmail = async (e) => {
+    e.preventDefault();
+    const docRef = doc(db, "emails", e.target.id);
+    await deleteDoc(docRef).then(() => {
+      notify();
+    });
+  };
+
   useEffect(() => {
     onSnapshot(collRef, (snapshot) => {
       let emails = [];
+      let sentEmails = [];
+      let queuedEmails = [];
       snapshot.docs.forEach((doc) => {
         emails.push({ ...doc.data(), id: doc.id });
+        if (doc.data().emailStatus === "Sent") {
+          sentEmails.push({ ...doc.data(), id: doc.id });
+        }
+        if (doc.data().emailStatus === "Queued") {
+          queuedEmails.push({ ...doc.data(), id: doc.id });
+        }
       });
       setData(emails);
+      setEmailSend(sentEmails);
+      setEmailQuery(queuedEmails);
     });
   }, []);
 
   return (
     <>
       <Header />
+      <Toaster position="top-right" reverseOrder={true} />
       <div className="bg-gray-50 pt-12 sm:pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
@@ -126,13 +156,29 @@ function EmailList() {
             <div className="absolute inset-0 h-1/2 bg-gray-50" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
-                <dl className="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-3">
+                <dl className="rounded-lg bg-white shadow-lg sm:grid sm:grid-cols-5">
+                  <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
+                    <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                      Total Emails
+                    </dt>
+                    <dd className="order-1 text-5xl font-extrabold text-indigo-600">
+                      {data && data.length}
+                    </dd>
+                  </div>
                   <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                       Emails Send
                     </dt>
                     <dd className="order-1 text-5xl font-extrabold text-indigo-600">
-                      {data && data.length}
+                      {data && emailSend.length}
+                    </dd>
+                  </div>
+                  <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                    <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                      Emails Queued
+                    </dt>
+                    <dd className="order-1 text-5xl font-extrabold text-indigo-600">
+                      {data && emailQuery.length}
                     </dd>
                   </div>
                   <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
@@ -246,12 +292,15 @@ function EmailList() {
                       <th scope="col" className="relative px-6 py-3">
                         <span className="sr-only">Edit</span>
                       </th>
+                      <th scope="col" className="relative px-6 py-3">
+                        <span className="sr-only">Delete</span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
                     {data &&
                       data.map((person) => (
-                        <tr key={person.email}>
+                        <tr key={person.id}>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
@@ -266,9 +315,21 @@ function EmailList() {
                           </td>
 
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              {person.emailStatus}
-                            </span>
+                            {person.emailStatus === "Queued" && (
+                              <span className="px-5 inline-flex text-base leading-5 font-semibold rounded-full bg-yellow-100 text-green-800">
+                                {person.emailStatus}
+                              </span>
+                            )}
+                            {person.emailStatus === "Error" && (
+                              <span className="px-5 inline-flex text-base leading-5 font-semibold rounded-full bg-pink-200 text-green-800">
+                                {person.emailStatus}
+                              </span>
+                            )}
+                            {person.emailStatus === "Sent" && (
+                              <span className="px-5 inline-flex text-base leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                {person.emailStatus}
+                              </span>
+                            )}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"></td>
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -277,6 +338,16 @@ function EmailList() {
                               className="text-indigo-600 hover:text-indigo-900"
                             >
                               Edit
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a
+                              href="#"
+                              onClick={deleteEmail}
+                              id={person.id}
+                              className="text-pink-600 hover:text-pink-900"
+                            >
+                              Delete
                             </a>
                           </td>
                         </tr>

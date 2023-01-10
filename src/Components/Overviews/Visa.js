@@ -9,6 +9,9 @@ import { ShieldCheckIcon } from "@heroicons/react/outline";
 import { CurrencyDollarIcon, GlobeIcon } from "@heroicons/react/outline";
 
 import VisaImg from "../../assets/visa6.png";
+import EnrollBtn from "../Apply/EnrollBtn";
+import OrderModal from "../Order/orderModal";
+import Modals from "../../Utils/Modals";
 const product = {
   name: "VISA CONSULTANCY",
   href: "#",
@@ -61,10 +64,12 @@ function classNames(...classes) {
 }
 
 const Visa = () => {
+  const id = "63bb8f3ee651c1ced5e9c67b";
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-
+  const [open, setOpen] = useState(false);
   return (
     <div className="bg-white">
+      <Modals value={open} closeModal={setOpen} />
       <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
         {/* Product details */}
         <div className="lg:max-w-lg lg:self-end">
@@ -153,12 +158,7 @@ const Visa = () => {
                 </a>
               </div>
               <div className="mt-10">
-                <button
-                  type="submit"
-                  className="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                >
-                  Enroll
-                </button>
+                <EnrollBtn setOpen={setOpen} id={id} />
               </div>
               <div className="mt-6 text-center">
                 <a href="#" className="group inline-flex text-base font-medium">

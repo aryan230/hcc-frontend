@@ -11,7 +11,11 @@ import {
   ORDER_PAY_RESET,
 } from "../redux/constants/orderConstant";
 import axios from "axios";
-import { getOrderDetails, payOrder } from "../redux/actions/orderAction";
+import {
+  getOrderDetails,
+  orderAddressSet,
+  payOrder,
+} from "../redux/actions/orderAction";
 import Loader from "../Components/Loader";
 import PaymentModal from "../Components/NewPE/PaymentModal";
 
@@ -43,6 +47,9 @@ const Checkout = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
+  const orderAddress = useSelector((state) => state.orderAddress);
+  const { sucess } = orderAddress;
+
   const orderPay = useSelector((state) => state.orderPay);
   const { sucess: sucessPay, loading: loadingPay } = orderPay;
 
@@ -50,7 +57,11 @@ const Checkout = () => {
   const [sdkready, setsdkReady] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [adress, setAdress] = useState("");
+  const [number, setNumber] = useState();
+  const [address, setAdress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [postalCode, setPostalCode] = useState();
   const [course, setCourse] = useState("");
   const [coursePrice, setCoursePrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
@@ -116,6 +127,8 @@ const Checkout = () => {
       if (order._id !== orderId) {
         dispatch(getOrderDetails(orderId));
       } else {
+        console.log(order);
+
         setCoursePrice(Number(order.coursePrice));
         setTaxPrice(Number(order.coursePrice * 0.18));
         setTotalPrice(
@@ -148,6 +161,21 @@ const Checkout = () => {
     }
   }, [dispatch, order, orderId, sucessPay]);
 
+  const payBtnClick = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      orderAddressSet(orderId, {
+        number,
+        city,
+        state,
+        address,
+        postalCode,
+      })
+    );
+
+    setPaymentModal(true);
+  };
+
   return loading ? (
     <Loader />
   ) : error ? (
@@ -155,7 +183,7 @@ const Checkout = () => {
   ) : (
     <>
       <Header />
-      <div className="bg-white">
+      <div className="bg-white font-karla">
         {paymentModal && (
           <PaymentModal
             value={paymentModal}
@@ -169,17 +197,22 @@ const Checkout = () => {
           className="hidden lg:block fixed top-0 left-0 w-1/2 h-full bg-white"
           aria-hidden="true"
         />
-        <div
-          className="hidden lg:block fixed top-0 right-0 w-1/2 h-full bg-indigo-900"
-          aria-hidden="true"
-        />
+        {order.isPaid ? (
+          <div
+            className="hidden lg:block fixed top-0 right-0 w-1/2 h-full bg-green-700"
+            aria-hidden="true"
+          />
+        ) : (
+          <div
+            className="hidden lg:block fixed top-0 right-0 w-1/2 h-full bg-indigo-900"
+            aria-hidden="true"
+          />
+        )}
 
-        <header className="relative max-w-7xl mx-auto bg-indigo-900 py-6 lg:bg-transparent lg:grid lg:grid-cols-2 lg:gap-x-16 lg:px-8 lg:pt-16 lg:pb-10">
+        <header className="relative max-w-7xl mx-auto bg-green-700 py-6 lg:bg-transparent lg:grid lg:grid-cols-2 lg:gap-x-16 lg:px-8 lg:pt-16 lg:pb-10">
           <div className="max-w-2xl mx-auto flex px-4 lg:max-w-lg lg:w-full lg:px-0">
             <a href="/">
               <span className="sr-only">Workflow</span>
-              <img src={Logo} alt="" className="h-8 w-auto lg:hidden" />
-              <img src={Logo} alt="" className="hidden lg:block h-8 w-auto" />
             </a>
           </div>
         </header>
@@ -189,44 +222,44 @@ const Checkout = () => {
           {order.isPaid ? (
             <section
               aria-labelledby="summary-heading"
-              className="bg-emerald-900 text-indigo-300 pt-6 pb-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
+              className="bg-green-700 text-white pt-6 pb-12 md:px-10 lg:max-w-lg lg:w-full lg:mx-auto lg:px-0 lg:pt-0 lg:pb-24 lg:bg-transparent lg:row-start-1 lg:col-start-2"
             >
               <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
                 <h2 id="summary-heading" className="sr-only">
                   Order summary
                 </h2>
-
-                <dl>
-                  <dt className="text-sm font-medium">Amount due</dt>
-                  <dd className="mt-1 text-3xl font-extrabold text-white">
-                    ₹29,900
-                  </dd>
-                </dl>
+                {order.isPaid ? (
+                  <dl>
+                    <dt className="text-sm font-medium text-stone-200 underline">
+                      <a href="">Download Receipt</a>
+                    </dt>
+                    <dd className="mt-1 text-3xl font-extrabold text-white">
+                      Payment Sucessful
+                    </dd>
+                  </dl>
+                ) : (
+                  <dl>
+                    <dt className="text-sm font-medium">Amount due</dt>
+                    <dd className="mt-1 text-3xl font-extrabold text-white">
+                      ₹{order.totalPrice}
+                    </dd>
+                  </dl>
+                )}
 
                 <ul
                   role="list"
                   className="text-sm font-medium divide-y divide-white divide-opacity-10"
                 >
-                  {products.map((product) => (
-                    <li
-                      key={product.id}
-                      className="flex items-start py-6 space-x-4"
-                    >
-                      <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
-                        className="flex-none w-20 h-20 rounded-md object-center object-cover"
-                      />
-                      <div className="flex-auto space-y-1">
-                        <h3 className="text-white">{product.name}</h3>
-                        <p>{product.color}</p>
-                        <p>{product.size}</p>
-                      </div>
-                      <p className="flex-none text-base font-medium text-white">
-                        {product.price}
-                      </p>
-                    </li>
-                  ))}
+                  <li className="flex items-start py-6 space-x-4">
+                    <div className="flex-auto space-y-1">
+                      <h3 className="text-white text-lg ">
+                        {order.orderCourse[0].name}
+                      </h3>
+                    </div>
+                    <p className="flex-none text-base font-medium text-white">
+                      ₹{order.coursePrice}
+                    </p>
+                  </li>
                 </ul>
 
                 <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
@@ -287,7 +320,7 @@ const Checkout = () => {
                 <dl>
                   <dt className="text-sm font-medium">Amount due</dt>
                   <dd className="mt-1 text-3xl font-extrabold text-white">
-                    ₹29,900
+                    ₹{order.coursePrice}
                   </dd>
                 </dl>
 
@@ -295,19 +328,16 @@ const Checkout = () => {
                   role="list"
                   className="text-sm font-medium divide-y divide-white divide-opacity-10"
                 >
-                  {products.map((product) => (
-                    <li
-                      key={product.id}
-                      className="flex items-start py-6 space-x-4"
-                    >
-                      <div className="flex-auto space-y-1">
-                        <h3 className="text-white text-lg ">{product.name}</h3>
-                      </div>
-                      <p className="flex-none text-base font-medium text-white">
-                        {product.price}
-                      </p>
-                    </li>
-                  ))}
+                  <li className="flex items-start py-6 space-x-4">
+                    <div className="flex-auto space-y-1">
+                      <h3 className="text-white text-lg ">
+                        {order.orderCourse[0].name}
+                      </h3>
+                    </div>
+                    <p className="flex-none text-base font-medium text-white">
+                      ₹{order.coursePrice}
+                    </p>
+                  </li>
                 </ul>
 
                 <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
@@ -365,12 +395,12 @@ const Checkout = () => {
               Payment and details
             </h2>
             {userInfo ? (
-              <form>
+              <form onSubmit={payBtnClick}>
                 <div className="max-w-2xl mx-auto px-4 lg:max-w-none lg:px-0">
                   <div>
                     <h3
                       id="contact-info-heading"
-                      className="text-lg font-medium text-gray-900"
+                      className="text-2xl font-medium text-gray-800"
                     >
                       Welcome, {userInfo.name}
                     </h3>
@@ -444,6 +474,11 @@ const Checkout = () => {
                           type="number"
                           id="phone-number"
                           name="phone-number"
+                          required
+                          value={
+                            order.shippingAdress && order.shippingAdress.number
+                          }
+                          onChange={(e) => setNumber(e.target.value)}
                           autoComplete="email"
                           className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         />
@@ -471,7 +506,13 @@ const Checkout = () => {
                           <input
                             type="text"
                             id="address"
+                            onChange={(e) => setAdress(e.target.value)}
                             name="address"
+                            value={
+                              order.shippingAdress &&
+                              order.shippingAdress.address
+                            }
+                            required
                             autoComplete="street-address"
                             className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -489,7 +530,12 @@ const Checkout = () => {
                           <input
                             type="text"
                             id="city"
+                            value={
+                              order.shippingAdress && order.shippingAdress.city
+                            }
                             name="city"
+                            onChange={(e) => setCity(e.target.value)}
+                            required
                             autoComplete="address-level2"
                             className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -508,6 +554,11 @@ const Checkout = () => {
                             type="text"
                             id="region"
                             name="region"
+                            value={
+                              order.shippingAdress && order.shippingAdress.state
+                            }
+                            onChange={(e) => setState(e.target.value)}
+                            required
                             autoComplete="address-level1"
                             className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -524,8 +575,14 @@ const Checkout = () => {
                         <div className="mt-1">
                           <input
                             type="text"
+                            required
                             id="postal-code"
+                            onChange={(e) => setPostalCode(e.target.value)}
                             name="postal-code"
+                            value={
+                              order.shippingAdress &&
+                              order.shippingAdress.postalCode
+                            }
                             autoComplete="postal-code"
                             className="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           />
@@ -557,10 +614,7 @@ const Checkout = () => {
                   {!order.isPaid && (
                     <div className="mt-10 flex justify-end pt-6 border-t border-gray-200">
                       <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setPaymentModal(true);
-                        }}
+                        type="submit"
                         className="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                       >
                         Pay now

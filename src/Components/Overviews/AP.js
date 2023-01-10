@@ -14,6 +14,7 @@ import InsideLoader from "../InsideLoader";
 import Loader from "../Loader";
 import APImg from "../../assets/ap14.png";
 import APImgSM from "../../assets/ap10.png";
+import EnrollBtn from "../Apply/EnrollBtn";
 const product = {
   name: "UNIVERSITY ADMISSION 2023",
   price: "₹25,000",
@@ -78,7 +79,7 @@ function classNames(...classes) {
 }
 
 const AP = () => {
-  const id = "6399c7aa0553cbf476a70c1c";
+  const id = "63bb8f3ee651c1ced5e9c67a";
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -113,37 +114,37 @@ const AP = () => {
     cart.totalPrice = Number(cart.itemsPrice) + Number(cart.taxPrice);
   }
 
-  const addToCartHandler = async () => {
-    setLoader(true);
-    if (orders.some((order) => order.orderCourse[0].product === id)) {
-      setOrderID(
-        orders.find((order) => order.orderCourse[0].product === id)._id
-      );
-      setLoader(false);
-      setorderModalValue(true);
-      return;
-    } else {
-      fetch(`https://hcc-backend.onrender.com/api/products/${id}`)
-        .then((response) => response.json())
-        .then(async (data) => {
-          await dispatch(
-            createOrder({
-              orderCourse: {
-                product: data._id,
-                name: data.name,
-                price: data.price,
-              },
-              paymentMethod: "Razorpay",
-              coursePrice: Number(29900),
-              taxPrice: 0,
-              totalPrice: Number(29900),
-            })
-          );
-        });
+  // const addToCartHandler = async () => {
+  //   setLoader(true);
+  //   if (orders.some((order) => order.orderCourse[0].product === id)) {
+  //     setOrderID(
+  //       orders.find((order) => order.orderCourse[0].product === id)._id
+  //     );
+  //     setLoader(false);
+  //     setorderModalValue(true);
+  //     return;
+  //   } else {
+  //     fetch(`https://hcc-backend.onrender.com/api/products/${id}`)
+  //       .then((response) => response.json())
+  //       .then(async (data) => {
+  //         await dispatch(
+  //           createOrder({
+  //             orderCourse: {
+  //               product: data._id,
+  //               name: data.name,
+  //               price: data.price,
+  //             },
+  //             paymentMethod: "Razorpay",
+  //             coursePrice: Number(29900),
+  //             taxPrice: 0,
+  //             totalPrice: Number(29900),
+  //           })
+  //         );
+  //       });
 
-      setLoader(false);
-    }
-  };
+  //     setLoader(false);
+  //   }
+  // };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -216,7 +217,9 @@ const AP = () => {
             </p>
 
             <form className="mt-10">
-              {userInfo ? (
+              {/* {userInfo ? (
+                <EnrollBtn />
+              ) : (
                 <button
                   onClick={(e) => {
                     e.preventDefault();
@@ -228,7 +231,6 @@ const AP = () => {
                 >
                   {loadingOrders ? <InsideLoader /> : "Enroll"}
                 </button>
-              ) : (
                 <button
                   onClick={(e) => {
                     e.preventDefault();
@@ -237,10 +239,10 @@ const AP = () => {
                   type="submit"
                   className="mt-10 mb-2 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Enroll
+                  Apply
                 </button>
-              )}
-
+              )} */}
+              <EnrollBtn setOpen={setOpen} id={id} />
               <a
                 href="#"
                 className="text-sm font-medium text-gray-600 hover:text-indigo-500"

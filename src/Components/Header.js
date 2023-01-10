@@ -102,7 +102,12 @@ const adminList = [
     href: "/admin/email",
     icon: UserIcon,
   },
-  { name: "Logout", href: "/logout", icon: LockClosedIcon },
+  { name: "Order List", href: "/admin/orders", icon: LockClosedIcon },
+  {
+    name: "Courses",
+    href: "/admin/products",
+    icon: UserIcon,
+  },
 ];
 const resources = [
   {

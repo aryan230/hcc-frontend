@@ -40,8 +40,8 @@ function ContactPage() {
             Get In touch
           </h1>
           <p className="text-xl text-gray-600 pb-8 font-normal">
-            2493 AP, Sector 57 <br />
-            Gurugram, 122001
+            PAN India <br />
+            Gurugram, Mumbai, Banglore
           </p>
           <ul className="xl:flex w-1/3 justify-between pb-6">
             <li>

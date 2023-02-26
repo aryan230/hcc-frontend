@@ -18,6 +18,7 @@ import {
 } from "../redux/actions/orderAction";
 import Loader from "../Components/Loader";
 import PaymentModal from "../Components/NewPE/PaymentModal";
+import { BadgeCheckIcon, LightningBoltIcon } from "@heroicons/react/outline";
 
 const products = [
   {
@@ -234,7 +235,10 @@ const Checkout = () => {
                       <a href="">Download Receipt</a>
                     </dt>
                     <dd className="mt-1 text-3xl font-extrabold text-white">
-                      Payment Sucessful
+                      Payment Sucessful{" "}
+                      <span className="text-sm font-normal">
+                        ({order.paidAt.slice(0, 10)})
+                      </span>
                     </dd>
                   </dl>
                 ) : (
@@ -404,21 +408,7 @@ const Checkout = () => {
                     >
                       Welcome, {userInfo.name}
                     </h3>
-                    {order.isPaid && (
-                      <>
-                        <div className="mt-10 flex justify-evenly pt-6 border-t border-gray-200 w-full">
-                          <button className="border bg-indigo-600 border-indigo-600 rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white  focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-teal-500">
-                            Track your progress
-                          </button>
-                          <button
-                            disabled
-                            className="border border-green-600 rounded-md shadow-sm py-2 px-4  text-sm font-medium text-green-700  focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-teal-500"
-                          >
-                            Payment Sucess on {order.paidAt.slice(0, 10)}
-                          </button>
-                        </div>
-                      </>
-                    )}
+
                     <div className="mt-6 grid grid-cols-3 sm:grid-cols-4 gap-y-6 gap-x-4">
                       <div className="col-span-3 sm:col-span-4">
                         <label
@@ -620,6 +610,20 @@ const Checkout = () => {
                         Pay now
                       </button>
                     </div>
+                  )}
+                  {order.isPaid && (
+                    <>
+                      <div className="mt-10 flex justify-end pt-6 border-t border-gray-200">
+                        <a
+                          href="#"
+                          type="submit"
+                          className="flex bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+                        >
+                          <LightningBoltIcon className="w-5 h-5 mr-2" />
+                          Go to Dashboard
+                        </a>
+                      </div>
+                    </>
                   )}
                 </div>
               </form>

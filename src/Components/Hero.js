@@ -141,11 +141,12 @@ const Hero = () => {
                   </h1>
                 )}
 
-                <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                  For many students, studying abroad is the ultimate goal. The
-                  globe is accessible to international students once again, when
-                  a while ago it seemed unattainable, and universities and
-                  colleges are welcome students with open arms.
+                <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl font-karla">
+                  Find your path to success with The Honest Career Company, a
+                  leading study abroad firm. Our experts help students get
+                  admission in top 150 ranked universities worldwide and provide
+                  comprehensive support. Start your journey today and elevate
+                  your future.
                 </p>
                 {userData ? (
                   <div className="mt-10 sm:flex sm:justify-evenly lg:justify-evenly items-center">

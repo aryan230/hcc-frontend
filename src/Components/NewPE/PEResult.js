@@ -49,6 +49,9 @@ function PEResult() {
   const [paymentModal, setPaymentModal] = useState(false);
   const [formDataLoading, setFormDataLoading] = useState(true);
   const [formData, setFormData] = useState();
+  const [subtotal, setSubtotal] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [Total, setTotal] = useState(0);
   const [idError, setIdError] = useState(false);
   useEffect(() => {
     const collRef = collection(db, "pe-forms");
@@ -281,7 +284,7 @@ function PEResult() {
 
                       <div className="flex items-center justify-between border-t border-white border-opacity-10 text-white pt-6">
                         <dt className="text-base">Total</dt>
-                        <dd className="text-base">₹642.60</dd>
+                        <dd className="text-base">₹</dd>
                       </div>
                     </dl>
                     <button

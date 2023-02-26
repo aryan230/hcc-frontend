@@ -28,8 +28,8 @@ function Apply() {
     <>
       <Header />
       {loader && <Loader />}
-      <div className="relative flex h-full w-full">
-        <div className="w-full h-screen lg:w-1/2 bg-indigo-700">
+      <div className="relative flex min-h-full h-fit w-full">
+        <div className="py-10 w-full min-h-screen h-fit lg:w-1/2 bg-indigo-700 flex justify-center items-center">
           {sucess ? (
             <div className="mx-auto flex h-full w-2/3 flex-col justify-center text-white xl:w-1/2">
               <div>

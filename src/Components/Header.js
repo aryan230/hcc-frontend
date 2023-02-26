@@ -24,6 +24,7 @@ import {
   ColorSwatchIcon,
   LightningBoltIcon,
   LibraryIcon,
+  ClipboardListIcon,
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { auth, db } from "../firebase";
@@ -70,6 +71,13 @@ const solutions = [
       "Learn IELTS online at your own pace. Start today and improve your skills.",
     href: "ieltsPrep",
     icon: ColorSwatchIcon,
+  },
+  {
+    name: "SOP Editing",
+    description:
+      "With our attention to detail and commitment to excellence, we will help you create a compelling SOP that stands out from the rest.",
+    href: "sop",
+    icon: ClipboardListIcon,
   },
 ];
 const callsToAction = [
@@ -118,24 +126,11 @@ const resources = [
     icon: SupportIcon,
   },
   {
-    name: "Guides",
-    description:
-      "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
-    icon: BookmarkAltIcon,
-  },
-  {
     name: "Events",
     description:
       "See what meet-ups and other events we might be planning near you.",
     href: "#",
     icon: CalendarIcon,
-  },
-  {
-    name: "Security",
-    description: "Understand how we take your privacy seriously.",
-    href: "#",
-    icon: ShieldCheckIcon,
   },
 ];
 const recentPosts = [
@@ -168,7 +163,7 @@ const Header = () => {
   const [userData, setUserData] = useState([]);
 
   return (
-    <Popover className="relative bg-white font-karla z-50">
+    <Popover className="relative bg-white font-karla z-50 py-3">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center  border-gray-100 py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
@@ -250,7 +245,7 @@ const Header = () => {
             </Popover>
 
             <a
-              href="#"
+              href="/about"
               className="text-base font-medium text-gray-500 hover:text-gray-900"
             >
               What We do?

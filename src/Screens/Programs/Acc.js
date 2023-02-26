@@ -8,7 +8,6 @@ const Acc = () => {
     <>
       <Header />
       <Accomidation />
-      <AccFeature2 />
     </>
   );
 };

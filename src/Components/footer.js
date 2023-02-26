@@ -115,7 +115,8 @@ const Footer = () => {
           <div className="space-y-8 xl:col-span-1">
             <img className="h-10" src={LogoLight} alt="Company name" />
             <p className="text-gray-500 text-base">
-              Helping students make thier dream come true, since 2020.
+              Unlock Your Potential with The Honest Career Company: Top 150
+              Universities, Limitless Opportunities.
             </p>
             <div className="flex space-x-6">
               {navigation.social.map((item) => (

@@ -37,6 +37,8 @@ import UserList from "./Screens/Admin/UserList";
 import EmailList from "./Screens/Admin/EmailList";
 import OrderList from "./Screens/Admin/OrderList";
 import ProductList from "./Screens/Admin/ProductList";
+import SopPage from "./Screens/SopPage";
+import About from "./Screens/About";
 
 function App() {
   const [banner, setBanner] = useState(true);
@@ -48,7 +50,7 @@ function App() {
 
           <Routes>
             <Route element={<Home />} path="/"></Route>
-
+            <Route element={<About />} path="/about"></Route>
             <Route element={<Landing />} path="/app"></Route>
 
             <Route element={<Login />} path="/login"></Route>
@@ -78,6 +80,7 @@ function App() {
             <Route element={<Stripe />} path="/stripe"></Route>
             {/* Mail */}
             <Route element={<Mail />} path="/mail/:id"></Route>
+            <Route element={<SopPage />} path="/sop"></Route>
             <Route element={<UserList />} path="/admin/users"></Route>
             <Route element={<OrderList />} path="/admin/orders"></Route>
             <Route element={<EmailList />} path="/admin/email"></Route>

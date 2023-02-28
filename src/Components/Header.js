@@ -41,42 +41,42 @@ const solutions = [
     name: "University Admission",
     description:
       "We help you find the best course and coordinate your university application.",
-    href: "university-admission",
+    href: "/university-admission",
     icon: AcademicCapIcon,
   },
   {
     name: "Visa Consultancy",
     description:
       "We will help you prepare your visa documents and simplify the otherwise cumbersome process of getting a visa.",
-    href: "visa",
+    href: "/visa",
     icon: PaperAirplaneIcon,
   },
   {
     name: "Accommodation / Pre-Departure Support",
     description:
       "We will help you find out the best accommodation according to one’s need.",
-    href: "accomidation",
+    href: "/accomidation",
     icon: HomeIcon,
   },
   {
     name: "Profile Evaluation",
     description:
       "Get your profile evaluated by our best counsellor’s. And match which colleges accept your profile.",
-    href: "pe",
+    href: "/pe",
     icon: ClipboardCheckIcon,
   },
   {
     name: "IELTS Preparation",
     description:
       "Learn IELTS online at your own pace. Start today and improve your skills.",
-    href: "ieltsPrep",
+    href: "/ieltsPrep",
     icon: ColorSwatchIcon,
   },
   {
     name: "SOP Editing",
     description:
       "With our attention to detail and commitment to excellence, we will help you create a compelling SOP that stands out from the rest.",
-    href: "sop",
+    href: "/sop",
     icon: ClipboardListIcon,
   },
 ];
@@ -217,9 +217,9 @@ const Header = () => {
                       <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                         <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                           {solutions.map((item) => (
-                            <a
+                            <Link
                               key={item.name}
-                              href={item.href}
+                              to={item.href}
                               className="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50"
                             >
                               <item.icon
@@ -234,7 +234,7 @@ const Header = () => {
                                   {item.description}
                                 </p>
                               </div>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       </div>

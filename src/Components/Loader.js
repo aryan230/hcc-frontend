@@ -1,6 +1,6 @@
 import { ClimbingBoxLoader } from "react-spinners";
 import Logo from "../assets/logo.gif";
-import { Oval, RotatingLines } from "react-loader-spinner";
+import { FallingLines, Oval, RotatingLines } from "react-loader-spinner";
 import { motion, Variants } from "framer-motion";
 const Loader = () => {
   const svgVariants = {
@@ -49,12 +49,18 @@ const Loader = () => {
   return (
     <div className="loader-content">
       <div className="loader-inside">
-        <RotatingLines
+        {/* <RotatingLines
           strokeColor="grey"
           strokeWidth="5"
           animationDuration="0.75"
           width="48"
           visible={true}
+        /> */}
+        <FallingLines
+          color="#ffffff"
+          width="100"
+          visible={true}
+          ariaLabel="falling-lines-loading"
         />
         {/* <motion.svg
           xmlns="http://www.w3.org/2000/svg"

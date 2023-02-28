@@ -7,6 +7,7 @@ import {
 import PELoader from "../../Utils/PELoader";
 import { useDispatch } from "react-redux";
 import { payOrder } from "../../redux/actions/orderAction";
+import { Link } from "react-router-dom";
 
 function CheckoutForm({ paymentSucess, setPaymentModal, paymentDetails }) {
   const stripe = useStripe();
@@ -48,12 +49,12 @@ function CheckoutForm({ paymentSucess, setPaymentModal, paymentDetails }) {
         Pay Now
       </button>
       <div className="mt-2">
-        <a
-          href="/"
+        <Link
+          href="/contact"
           className="text-lg font-karla text-indigo-600 tracking-tight"
         >
           Need Help?
-        </a>
+        </Link>
       </div>
       <div>
         <a

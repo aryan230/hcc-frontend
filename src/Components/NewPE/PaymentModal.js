@@ -5,16 +5,18 @@ import { CheckIcon } from "@heroicons/react/outline";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Payment/CheckoutForm";
+import axios from "axios";
 
 function PaymentModal({
   setPaymentModal,
   value,
   paymentSucess,
   paymentDetails,
+  totalPrice,
 }) {
   const [open, setOpen] = useState(value);
   const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState("");
+  const [clientSecret, setClientSecret] = useState();
 
   useEffect(() => {
     fetch("http://localhost:3001/api/config/stripe").then(async (r) => {
@@ -23,17 +25,25 @@ function PaymentModal({
     });
   }, []);
   console.log(paymentDetails);
-  useEffect(() => {
-    fetch("http://localhost:3001/api/create-payment-intent", {
-      method: "POST",
-      body: JSON.stringify({
-        amount: 2000,
-      }),
-    }).then(async (r) => {
-      const { clientSecret } = await r.json();
+  console.log(totalPrice);
+  const getClientSecret = async () => {
+    const { data } = await axios.post(
+      "http://localhost:3001/api/create-payment-intent",
+
+      {
+        amount: Number(totalPrice),
+      }
+    );
+    if (data) {
+      const { clientSecret } = data;
       setClientSecret(clientSecret);
-    });
-  }, []);
+    }
+  };
+  useEffect(() => {
+    if (!clientSecret) {
+      getClientSecret();
+    }
+  }, [clientSecret]);
   return (
     <Transition.Root show={value} as={Fragment}>
       <Dialog

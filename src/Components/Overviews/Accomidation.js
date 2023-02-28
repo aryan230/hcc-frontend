@@ -4,7 +4,7 @@ const Accomidation = () => {
       <div className="mx-auto max-w-lg">
         <h1 className="text-3xl font-bold text-gray-800  lg:text-4xl">
           {" "}
-          Accommodation / Pre-Departure Support
+          Accommodation / <br /> Pre-Departure Support
         </h1>
         <p className="mt-6 text-gray-500 ">
           {" "}
@@ -17,7 +17,10 @@ const Accomidation = () => {
         <button className="mt-6 rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium capitalize leading-5 text-white hover:bg-blue-500 focus:outline-none lg:mx-0 lg:w-auto">
           Enroll
         </button>
-        <p className="mt-3 text-sm text-gray-400">2k+ Students Enrolled!</p>
+        <p className="mt-3 text-sm text-gray-400">
+          Limited Enrollments. <br />
+          2k+ Students Enrolled!
+        </p>
       </div>
       <div className="mt-10 flex justify-center">
         <img

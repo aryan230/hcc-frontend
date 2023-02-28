@@ -19,6 +19,7 @@ import {
 import Loader from "../Components/Loader";
 import PaymentModal from "../Components/NewPE/PaymentModal";
 import { BadgeCheckIcon, LightningBoltIcon } from "@heroicons/react/outline";
+import Coupons from "../Components/Coupons";
 
 const products = [
   {
@@ -71,6 +72,12 @@ const Checkout = () => {
   const [user, setUser] = useState(false);
   const [paymentModal, setPaymentModal] = useState(false);
   const [paymentSucess, setPaymentSucess] = useState(false);
+  const [shippingAdress, setShippingAdress] = useState();
+  //Coupon
+
+  const [coupon, setCoupon] = useState(false);
+  const [valCoupon, setValCoupon] = useState(1);
+
   const startRazorPay = async () => {
     setPaymentLoading(true);
     const { data: clientId } = await axios.get(
@@ -129,14 +136,25 @@ const Checkout = () => {
         dispatch(getOrderDetails(orderId));
       } else {
         console.log(order);
+        if (coupon) {
+          setCoursePrice(Number(order.coursePrice));
+          setTaxPrice(Number(order.coursePrice * 0.18));
+          setDiscountPrice(Number(order.coursePrice * valCoupon));
+          setTotalPrice(
+            Number(order.coursePrice) +
+              Number(order.coursePrice * 0.18) -
+              Number(order.coursePrice * valCoupon)
+          );
+        }
+        if (!coupon) {
+          setCoursePrice(Number(order.coursePrice));
+          setTaxPrice(Number(order.coursePrice * 0.18));
+          setDiscountPrice(Number(0));
+          setTotalPrice(
+            Number(order.coursePrice) + Number(order.coursePrice * 0.18)
+          );
+        }
 
-        setCoursePrice(Number(order.coursePrice));
-        setTaxPrice(Number(order.coursePrice * 0.18));
-        setTotalPrice(
-          Number(order.coursePrice) +
-            Number(order.coursePrice * 0.18) -
-            Number(discountPrice)
-        );
         const addRazorPayScript = () => {
           const script = document.createElement("script");
           script.type = "text/javascript";
@@ -160,21 +178,26 @@ const Checkout = () => {
         }
       }
     }
-  }, [dispatch, order, orderId, sucessPay]);
+  }, [dispatch, order, orderId, sucessPay, coupon]);
 
   const payBtnClick = async (e) => {
     e.preventDefault();
-    await dispatch(
-      orderAddressSet(orderId, {
-        number,
-        city,
-        state,
-        address,
-        postalCode,
-      })
-    );
-
-    setPaymentModal(true);
+    console.log(order);
+    if (order.shippingAdress) {
+      console.log("I am reaching here.");
+      setPaymentModal(true);
+    } else {
+      await dispatch(
+        orderAddressSet(orderId, {
+          number,
+          city,
+          state,
+          address,
+          postalCode,
+        })
+      );
+      setPaymentModal(true);
+    }
   };
 
   return loading ? (
@@ -191,6 +214,7 @@ const Checkout = () => {
             setPaymentModal={setPaymentModal}
             paymentSucess={setPaymentSucess}
             paymentDetails={order}
+            totalPrice={totalPrice}
           />
         )}
         {/* Background color split screen for large screens */}
@@ -200,7 +224,7 @@ const Checkout = () => {
         />
         {order.isPaid ? (
           <div
-            className="hidden lg:block fixed top-0 right-0 w-1/2 h-full bg-green-700"
+            className="hidden lg:block fixed top-0 right-0 w-1/2 h-full bg-emerald-600"
             aria-hidden="true"
           />
         ) : (
@@ -345,28 +369,11 @@ const Checkout = () => {
                 </ul>
 
                 <dl className="text-sm font-medium space-y-6 border-t border-white border-opacity-10 pt-6">
-                  <form>
-                    <label
-                      htmlFor="discount-code"
-                      className="block text-sm font-medium text-white"
-                    >
-                      Discount code
-                    </label>
-                    <div className="flex space-x-4 mt-1">
-                      <input
-                        type="text"
-                        id="discount-code"
-                        name="discount-code"
-                        className="uppercase text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-800 focus:border-indigo-800 sm:text-sm"
-                      />
-                      <button
-                        type="submit"
-                        className="bg-gray-200 text-sm font-medium text-gray-600 rounded-md px-4 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                      >
-                        Apply
-                      </button>
-                    </div>
-                  </form>
+                  <Coupons
+                    coupon={coupon}
+                    setCoupon={setCoupon}
+                    setValCoupon={setValCoupon}
+                  />
                   <div className="flex items-center justify-between">
                     <dt>Subtotal (Course Fees)</dt>
                     <dd>₹ {coursePrice}</dd>
